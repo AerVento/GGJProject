@@ -2,19 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameController
+public class GameController : MonoSingleton<GameController>
 {
-    PlayerController PlayerController { get; }
-    CarrotsController CarrotsController { get; }
-    FlyingObjectsController FlyingObjectsController { get; }
+    private PlayerController playerController;
+    public PlayerController PlayerController { get => playerController; }
 
-    void GameStart()
+    private CarrotsController carrotsController = new CarrotsController();
+    public CarrotsController CarrotsController { get => carrotsController; }
+
+    private FlyingObjectsController flyingObjectsController = new FlyingObjectsController();
+    public FlyingObjectsController FlyingObjectsController { get => flyingObjectsController; }
+    
+    /// <summary>
+    /// Whether the game is running.
+    /// </summary>
+    public bool IsPlaying { get; private set; }
+
+    private void Start()
     {
         
     }
 
-   void GameEnd(bool result)
+    public void GameStart()
     {
+        IsPlaying = true;
+    }
 
+   public void GameEnd(bool result)
+    {
+        IsPlaying= false;
     }
 }

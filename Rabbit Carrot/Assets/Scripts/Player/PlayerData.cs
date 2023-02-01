@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class PlayerData
 {
-   int Score { get; set; }
-    float SecondsPassed { get; set; }
+    public int Score { get; set; }
+    public float SecondsPassed { get; set; }
 }

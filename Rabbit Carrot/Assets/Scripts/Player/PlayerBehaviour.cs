@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
-    void OperationHandle(E_PlayerOperation[] operations)
+    public void OperationHandle(E_PlayerOperation[] operations)
     {
 
     }
@@ -22,10 +22,5 @@ public class PlayerBehaviour : MonoBehaviour
     {
         
     }
-
-
-
-
-
 
 }
