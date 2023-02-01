@@ -6,7 +6,7 @@ using UnityEngine;
 /// Singleton of mono scripts.
 /// </summary>
 /// <typeparam name="T">The class type of singleton mono script.</typeparam>
-public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
+public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T instance;
     public static T Instance

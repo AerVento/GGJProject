@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daefd767c5982c04783be9dc3483aaa2, type: 3}
   m_Name: BlockTileSO
   m_EditorClassIdentifier: 
-  Tiles: []
+  Tiles:
+  - {fileID: 11400000, guid: ec08c912e7bfa2c4389259790786be7a, type: 2}

@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<map>
+  <Background>
+    <block id="1">
+      <position x="-3" y="-1" z="0" />
+    </block>
+    <block id="1">
+      <position x="-2" y="-1" z="0" />
+    </block>
+    <block id="1">
+      <position x="-1" y="-1" z="0" />
+    </block>
+  </Background>
+  <Middleground>
+    <block id="1">
+      <position x="2" y="0" z="0" />
+    </block>
+    <block id="1">
+      <position x="2" y="-1" z="0" />
+    </block>
+    <block id="1">
+      <position x="2" y="-2" z="0" />
+    </block>
+  </Middleground>
+  <Foreground>
+    <block id="1">
+      <position x="5" y="0" z="0" />
+    </block>
+    <block id="1">
+      <position x="4" y="-1" z="0" />
+    </block>
+    <block id="1">
+      <position x="5" y="-2" z="0" />
+    </block>
+    <block id="1">
+      <position x="6" y="-1" z="0" />
+    </block>
+  </Foreground>
+</map>

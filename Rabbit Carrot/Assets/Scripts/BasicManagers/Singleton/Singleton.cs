@@ -6,7 +6,7 @@ using UnityEngine;
 /// Base class of singleton mode.
 /// </summary>
 /// <typeparam name="T">The class type of singleton class.</typeparam>
-public class Singleton<T> where T: new()
+public abstract class Singleton<T> where T: new()
 {
     private static T instance;
     /// <summary>

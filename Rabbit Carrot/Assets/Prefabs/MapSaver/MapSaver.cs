@@ -8,9 +8,7 @@ using UnityEngine.Tilemaps;
 /// </summary>
 public class MapSaver : MonoBehaviour
 {
-    [ContextMenu("Clear all tiles")]
-    public void Clear()
-    {
-        GetComponent<Tilemap>().ClearAllTiles();
-    }
+    public Tilemap background;
+    public Tilemap middleground;
+    public Tilemap foreground;
 }
