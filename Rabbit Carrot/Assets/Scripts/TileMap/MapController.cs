@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Tilemaps;
 
 /// <summary>
@@ -43,6 +44,7 @@ public class MapController : Singleton<MapController>
     /// Grid of all tilemap.
     /// </summary>
     private Grid grid;
+
     /// <summary>
     /// Initialize the map.
     /// </summary>
@@ -50,19 +52,46 @@ public class MapController : Singleton<MapController>
     {
         GameObject obj = new GameObject("Tilemaps");
         grid = obj.AddComponent<Grid>();
-        
-        background = new GameObject("Background").AddComponent<Tilemap>();
+
+        GameObject back = new GameObject("Background");
+        background = back.AddComponent<Tilemap>();
+        back.AddComponent<TilemapRenderer>();
         background.transform.SetParent(obj.transform);
-        
-        middleground = new GameObject("Middleground").AddComponent<Tilemap>();
+
+        GameObject middle = new GameObject("Middleground");
+        middleground = middle.AddComponent<Tilemap>();
+        middle.AddComponent<TilemapRenderer>();
+        middle.AddComponent<TilemapCollider2D>(); //Add collider for blocks on middle ground
         middleground.transform.SetParent(obj.transform);
-        
-        foreground = new GameObject("Foreground").AddComponent<Tilemap>();
+
+        GameObject fore = new GameObject("Foreground");
+        foreground = fore.AddComponent<Tilemap>();
+        fore.AddComponent<TilemapRenderer>();
         foreground.transform.SetParent(obj.transform);
     }
-
     public void Load(string mapFilePath)
     {
-
+        XmlMapHandler handler = new XmlMapHandler();
+        foreach (var pair in handler.Load(mapFilePath))//不能直接覆盖，因为在下面修改时还会在调用一遍修改函数
+        {
+            Tilemap map;
+            switch (pair.layer)
+            {
+                case MapController.Layer.Background:
+                    map = background;
+                    break;
+                case MapController.Layer.Middleground:
+                    map = middleground;
+                    break;
+                case MapController.Layer.Foreground:
+                    map = foreground;
+                    break;
+                default: return;
+            }
+            foreach (var block in pair.mapData)
+            {
+                map.SetTile(block.Position, BlockTileSO.Instance.GetTile(block.BlockId));
+            }
+        }
     }
 }
