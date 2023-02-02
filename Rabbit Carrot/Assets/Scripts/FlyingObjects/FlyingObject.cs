@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class FlyingObject : MonoBehaviour
 {
-    E_Team team { get; set; }
+    
 }

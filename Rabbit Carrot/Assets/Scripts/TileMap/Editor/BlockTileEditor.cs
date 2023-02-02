@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(BlockTile))]
+//[CustomEditor(typeof(BlockTile))]
 public class BlockTileEditor : Editor
 {
     BlockTile tile;
@@ -13,9 +13,15 @@ public class BlockTileEditor : Editor
     }
     public override void OnInspectorGUI()
     {
-        tile.BlockId = EditorGUILayout.IntField(new GUIContent("Block Id"),tile.BlockId);
-        tile.BlockName = EditorGUILayout.TextField(new GUIContent("Block Name"), tile.BlockName);
-        tile.IsSolid = EditorGUILayout.Toggle(new GUIContent("Is Solid"), tile.IsSolid);
+        //tile.BlockId = EditorGUILayout.IntField(new GUIContent("Block Id"),tile.BlockId);
+        //tile.BlockName = EditorGUILayout.TextField(new GUIContent("Block Name"), tile.BlockName);
+        //tile.IsSolid = EditorGUILayout.Toggle(new GUIContent("Is Solid"), tile.IsSolid);
+        
         base.OnInspectorGUI();
+        EditorGUILayout.Space(10);
+    }
+    private void OnDestroy()
+    {
+        AssetDatabase.SaveAssets();
     }
 }

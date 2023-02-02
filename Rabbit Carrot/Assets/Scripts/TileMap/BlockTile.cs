@@ -8,7 +8,13 @@ using UnityEngine.Tilemaps;
 /// </summary>
 public class BlockTile : Tile
 {
-    public int BlockId { get; set; }
-    public string BlockName { get; set; }
-    public bool IsSolid { get; set; }
+    [SerializeField]
+    private int blockId;
+    public int BlockId { get => blockId; set => blockId = value; }
+    [SerializeField]
+    private string blockName;
+    public string BlockName { get => blockName; set => blockName = value; }
+    [SerializeField]
+    private bool isSolid;
+    public bool IsSolid { get =>isSolid; set =>isSolid = value; }
 }

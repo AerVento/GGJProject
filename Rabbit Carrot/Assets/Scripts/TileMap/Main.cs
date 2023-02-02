@@ -5,31 +5,24 @@ using UnityEngine;
 public class Main : MonoBehaviour
 {
     // Start is called before the first frame update
-    InputCalculator calculator = new InputCalculator();
-    void Start()
+    public GameObject bullet;
+    void Awake()
     {
         MapController.Instance.Load("Assets/XmlTileMapData/TestMap.xml");
         GameController.Instance.GameStart();
-        calculator.ClimbUpKey = (KeyCodeSource)KeyCode.W;
-        calculator.ClimbDownKey= (KeyCodeSource)KeyCode.S;
-        calculator.MoveLeftKey = (KeyCodeSource)KeyCode.A;
-        calculator.MoveRightKey = (KeyCodeSource)KeyCode.D;
-        calculator.StartListening();
-        
     }
-    string str = "";
     // Update is called once per frame
     void Update()
     {
-        string debug = "";
-        foreach(var operation in calculator.GetOperation())
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            debug += operation.ToString();
+            GameObject obj = Instantiate(bullet);
+
+            Vector3 rotate = obj.transform.eulerAngles;
+            rotate.z = Random.Range(0, 360);
+            obj.transform.eulerAngles = rotate;
+
+            obj.GetComponent<Bullet>().Speed = 2f;
         }
-        //if(debug != str)
-        //{
-        //    str = debug;
-           Debug.Log(debug);
-        //}
     }
 }

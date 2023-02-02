@@ -34,3 +34,6 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 1
   m_ColliderType: 2
+  blockId: 1
+  blockName: Grass
+  isSolid: 1

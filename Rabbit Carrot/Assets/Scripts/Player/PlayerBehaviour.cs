@@ -7,7 +7,7 @@ public class PlayerBehaviour : MonoBehaviour
     public float rabbitSpeed;
     public float moleSpeed;
     public GameObject mole;
-
+    private InputCalculator calculator = new InputCalculator();
     void OperationHandle(E_PlayerOperation[] operations)
     {
         foreach (E_PlayerOperation operation in operations)
@@ -35,6 +35,13 @@ public class PlayerBehaviour : MonoBehaviour
                         this.transform.position += new Vector3(0, rabbitSpeed * 2, 0);
                     }
                     break;
+                case E_PlayerOperation.ClimbDownQuick:
+                    //兔子角色向下移动,并且y轴不低于-8f
+                    if (this.transform.position.y >= -8f)
+                    {
+                        this.transform.position -= new Vector3(0, rabbitSpeed * 2, 0);
+                    }
+                    break;
                 case E_PlayerOperation.MoleMoveLeft:
                     //鼹鼠角色向左移动,并且y轴不小于-7f
                     if (mole.transform.position.x>-7)
@@ -60,12 +67,24 @@ public class PlayerBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        calculator.ClimbUpKey = (KeyCodeSource)KeyCode.W;
+        calculator.ClimbDownKey = (KeyCodeSource)KeyCode.S;
+        calculator.MoveLeftKey = (KeyCodeSource)KeyCode.A;
+        calculator.MoveRightKey = (KeyCodeSource)KeyCode.D;
+        calculator.StartListening();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //OperationHandle();
+        OperationHandle(calculator.GetOperation());
+        
+        string debug = "";
+        foreach (var operation in calculator.GetOperation())
+        {
+            debug += operation.ToString();
+        }
+        Debug.Log(debug);
     }
 
 

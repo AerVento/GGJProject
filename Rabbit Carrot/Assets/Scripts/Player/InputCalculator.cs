@@ -301,7 +301,10 @@ public class KeyInputBuffer
     {
         if (keyDic.ContainsKey(source))
         {
-            return keyDic[source].ToArray();
+            if (keyDic[source].Count > 0)
+                return keyDic[source].ToArray();
+            else
+                return new bool[1];
         }
         else
             return null;
