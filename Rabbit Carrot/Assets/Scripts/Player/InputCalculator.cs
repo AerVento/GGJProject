@@ -85,6 +85,10 @@ public class InputCalculator
         int InputTriggeredTime(bool[] history) 
         {
             int time = 0;
+            if(history.Length > 0 && history[0] == true)
+            {
+                time++;
+            }
             for(int i = 1; i < history.Length; i++)
             {
                 if (history[i - 1] == false && history[i] == true)
@@ -95,78 +99,82 @@ public class InputCalculator
 
         List<E_PlayerOperation> operations= new List<E_PlayerOperation>();
 
-        switch (nowClimbOperation)
+        bool[] upHistory = buffer.GetHistory(ClimbUpKey);
+        int upTimes = InputTriggeredTime(upHistory); //how many times climb up key has been pressed during the history
+        bool[] downHistory = buffer.GetHistory(ClimbDownKey);
+        int downTimes = InputTriggeredTime(downHistory);//how many times climb down key has been pressed during the history
+        
+        if (upHistory[upHistory.Length - 1] == true && downHistory[downHistory.Length - 1] == true)
         {
-            case E_PlayerOperation.None:
-                {
-                    bool[] upHistory = buffer.GetHistory(ClimbUpKey);
-                    int upTimes = InputTriggeredTime(upHistory); //how many times climb up key has been pressed during the history
-                    bool[] downHistory = buffer.GetHistory(ClimbDownKey);
-                    int downTimes = InputTriggeredTime(downHistory);//how many times climb down key has been pressed during the history
-                    if (upTimes != 0 && downTimes != 0)
-                    {
-                        //When both key triggered, clear all history 
-                        buffer.ClearHistory(ClimbUpKey);
-                        buffer.ClearHistory(ClimbDownKey);
-                        nowClimbOperation = E_PlayerOperation.None;
-                    }
-                    if (upTimes != 0 && upHistory[upHistory.Length - 1] == true)
-                    {
-                        if (upTimes == 1)
-                        {
-                            operations.Add(E_PlayerOperation.ClimbUp);
-                            nowClimbOperation = E_PlayerOperation.ClimbUp;
-                        }
-                        else if (upTimes > 1)
-                        {
-                            operations.Add(E_PlayerOperation.ClimbUpQuick);
-                            nowClimbOperation = E_PlayerOperation.ClimbUpQuick;
-                        }
-                    }
-                    if (downTimes != 0 && downHistory[downHistory.Length - 1] == true)
-                    {
-                        if (downTimes == 1)
-                        {
-                            operations.Add(E_PlayerOperation.ClimbDown);
-                            nowClimbOperation = E_PlayerOperation.ClimbDown;
-                        }
-                        else if (downTimes > 1)
-                        {
-                            operations.Add(E_PlayerOperation.ClimbDownQuick);
-                            nowClimbOperation = E_PlayerOperation.ClimbDownQuick;
-                        }
-                    }
-                }
-                break;
-            case E_PlayerOperation.ClimbUp:
-            case E_PlayerOperation.ClimbUpQuick:
-                {
-                    bool[] upHistory = buffer.GetHistory(ClimbUpKey);
-                    if (upHistory[upHistory.Length - 1] == false)
-                    {
-                        nowClimbOperation = E_PlayerOperation.None;
-                    }
-                    else
-                    {
-                        operations.Add(nowClimbOperation); //Stay at present operation.
-                    }
-                }
-                break;
-            case E_PlayerOperation.ClimbDown:
-            case E_PlayerOperation.ClimbDownQuick:
-                {
-                    bool[] downHistory = buffer.GetHistory(ClimbDownKey);
-                    if (downHistory[downHistory.Length - 1] == false)
-                    {
-                        nowClimbOperation = E_PlayerOperation.None;
-                    }
-                    else
-                    {
-                        operations.Add(nowClimbOperation); //Stay at present operation.
-                    }
-                }
-                break;
+            //When both key triggered, clear all history 
+            buffer.ClearHistory(ClimbUpKey);
+            buffer.ClearHistory(ClimbDownKey);
+            operations.Add(E_PlayerOperation.None);
+            nowClimbOperation = E_PlayerOperation.None;
         }
+        else
+        {
+            switch (nowClimbOperation)
+            {
+                case E_PlayerOperation.None:
+                    { 
+                        if (upHistory[upHistory.Length - 1] == true)
+                        {
+                            if (upTimes == 1)
+                            {
+                                operations.Add(E_PlayerOperation.ClimbUp);
+                                nowClimbOperation = E_PlayerOperation.ClimbUp;
+                            }
+                            else if (upTimes > 1)
+                            {
+                                operations.Add(E_PlayerOperation.ClimbUpQuick);
+                                nowClimbOperation = E_PlayerOperation.ClimbUpQuick;
+                            }
+                        }
+                        if (downHistory[downHistory.Length - 1] == true)
+                        {
+                            if (downTimes == 1)
+                            {
+                                operations.Add(E_PlayerOperation.ClimbDown);
+                                nowClimbOperation = E_PlayerOperation.ClimbDown;
+                            }
+                            else if (downTimes > 1)
+                            {
+                                operations.Add(E_PlayerOperation.ClimbDownQuick);
+                                nowClimbOperation = E_PlayerOperation.ClimbDownQuick;
+                            }
+                        }
+                    }
+                    break;
+                case E_PlayerOperation.ClimbUp:
+                case E_PlayerOperation.ClimbUpQuick:
+                    {
+                        if (upHistory[upHistory.Length - 1] == false)
+                        {
+                            nowClimbOperation = E_PlayerOperation.None;
+                        }
+                        else
+                        {
+                            operations.Add(nowClimbOperation); //Stay at present operation.
+                        }
+                    }
+                    break;
+                case E_PlayerOperation.ClimbDown:
+                case E_PlayerOperation.ClimbDownQuick:
+                    {
+                        if (downHistory[downHistory.Length - 1] == false)
+                        {
+                            nowClimbOperation = E_PlayerOperation.None;
+                        }
+                        else
+                        {
+                            operations.Add(nowClimbOperation); //Stay at present operation.
+                        }
+                    }
+                    break;
+            }
+        }
+        
 
         //For moving mole operations was simple.
         bool[] leftHistory = buffer.GetHistory(MoveLeftKey);
@@ -192,6 +200,7 @@ public class InputCalculator
             {
                 buffer.RefreshKey(source, source.GetInputStatus());
 
+                //Code for debuging: print the history of input source.
                 //string str = source.ToString() + ":";
                 //bool print = false;
                 //foreach (bool item in buffer.GetHistory(source))

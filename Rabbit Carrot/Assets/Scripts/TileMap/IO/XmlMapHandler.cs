@@ -20,6 +20,14 @@ public class XmlMapHandler : IMapHandler
         doc.Load(filePath);
         XmlNode root = doc.SelectSingleNode("map");
 
+        XmlNode rectNode = root.SelectSingleNode("rect");
+        RectInt rect = new RectInt();
+        rect.xMin = Convert.ToInt32(rectNode.Attributes["xMin"].Value);
+        rect.xMax = Convert.ToInt32(rectNode.Attributes["xMax"].Value);
+        rect.yMin = Convert.ToInt32(rectNode.Attributes["yMin"].Value);
+        rect.yMax = Convert.ToInt32(rectNode.Attributes["yMax"].Value);
+        data.Rect = rect;
+
         Type enumType = typeof(MapController.Layer);
         string[] arr = Enum.GetNames(enumType);
         foreach(var layerString in arr)
@@ -59,6 +67,15 @@ public class XmlMapHandler : IMapHandler
             xml.AppendChild(declaration);
             XmlElement root = xml.CreateElement("map");
             xml.AppendChild(root);
+
+            XmlElement rectNode = xml.CreateElement("rect");
+            RectInt rect = mapData.Rect;
+            rectNode.SetAttribute("xMin", rect.xMin.ToString());
+            rectNode.SetAttribute("xMax",rect.xMax.ToString());
+            rectNode.SetAttribute("yMin",rect.yMin.ToString());
+            rectNode.SetAttribute("yMax",rect.yMax.ToString());
+            root.AppendChild(rectNode);
+
             foreach(var pair in mapData)
             {
                 XmlElement layer = xml.CreateElement(pair.layer.ToString());

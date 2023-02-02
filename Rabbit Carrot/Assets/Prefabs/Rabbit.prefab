@@ -215,8 +215,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f62f41b287a332747a26d3d626e46b15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rabbitSpeed: 0.1
-  moleSpeed: 0.1
+  rabbitSpeed: 10
+  extraSpeedPercent: 2
+  moleSpeed: 10
   mole: {fileID: 1160211120492223784}
 --- !u!1 &1160211120492223784
 GameObject:

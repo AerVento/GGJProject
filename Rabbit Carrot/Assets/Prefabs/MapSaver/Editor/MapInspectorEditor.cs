@@ -28,10 +28,11 @@ public class MapInspectorEditor : Editor
 
     private static bool isEditing = false;
 
-    private static Grid grid;
     private static Map background;
     private static Map middleground;
     private static Map foreground;
+
+    private static RectInt rect;
 
     private void OnEnable()
     {
@@ -40,7 +41,6 @@ public class MapInspectorEditor : Editor
             if(isEditing == false)
             {
                 isEditing = true;
-                grid = (target as MapSaver).GetComponent<Grid>();
 
                 Initialize();
 
@@ -74,12 +74,17 @@ public class MapInspectorEditor : Editor
                 {
                     //Remove all tile on the position
                     map.data.Blocks.RemoveAll((block) => block.Position == tile.position);
-                    Debug.Log("Removed " + tile.position + " Now count: " + map.data.Blocks.Count);
+                    Debug.Log($"Removed at {tile.position}");
                 }
                 else if (tile.tile != null && !map.data.Contains(tile.position)) //if a null tile was changed to not-null
                 {
                     map.data.Blocks.Add(new TilemapData.BlockData(tile.position, (tile.tile as BlockTile).BlockId));
-                    Debug.Log("Added " + tile.position + " Now count: " + map.data.Blocks.Count);
+                    Debug.Log($"Added id {(tile.tile as BlockTile).BlockId} at {tile.position}");
+                }
+                else if(tile.tile != null && (tile.tile as BlockTile).BlockId != map.data[tile.position].BlockId) //if a tile was changed
+                {
+                    map.data[tile.position] = new TilemapData.BlockData(tile.position, (tile.tile as BlockTile).BlockId);
+                    Debug.Log($"Changed tile to id {(tile.tile as BlockTile).BlockId} at {tile.position}");
                 }
             }
         }
@@ -93,24 +98,31 @@ public class MapInspectorEditor : Editor
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
-        if (GUILayout.Button(new GUIContent("Load the map")))
+        if (isEditing)
         {
-            Clear();
-            Initialize();
+            rect = EditorGUILayout.RectIntField(new GUIContent("Rect"), rect);
+            if (GUILayout.Button(new GUIContent("Load the map")))
+            {
+                Clear();
+                Initialize();
 
-            typeof(EditorWindow).Assembly.GetType("UnityEditor.LogEntries").GetMethod("Clear").Invoke(new object(), null);
-            LoadMap();
-        }
-        if (GUILayout.Button(new GUIContent("Save the map")))
-        {
-            WriteMap();
+                typeof(EditorWindow).Assembly.GetType("UnityEditor.LogEntries").GetMethod("Clear").Invoke(new object(), null);
+                LoadMap();
+            }
+            if (GUILayout.Button(new GUIContent("Save the map")))
+            {
+                WriteMap();
+            }
         }
     }
     private void LoadMap()
     {
         string readPath = EditorUtility.OpenFilePanel("Choose a map file", Application.dataPath, "xml");
 
-        foreach(var pair in handler.Load(readPath))//不能直接覆盖mapData，因为在下面修改时还会在调用一遍修改函数
+        MapData data = handler.Load(readPath);
+        rect = data.Rect;
+
+        foreach (var pair in data)//不能直接覆盖mapData，因为在下面修改时还会在调用一遍修改函数
         {
             Tilemap map;
             switch (pair.layer)
@@ -128,7 +140,6 @@ public class MapInspectorEditor : Editor
             }
             foreach(var block in pair.mapData)
             {
-                Debug.Log(block.Position + ":" + pair.layer + ":" + block.BlockId);
                 map.SetTile(block.Position, BlockTileSO.Instance.GetTile(block.BlockId));
             }
         }
@@ -143,13 +154,14 @@ public class MapInspectorEditor : Editor
         string fileName = savePath.Substring(rootPos, extensionPos - rootPos);
         
         MapData saves = new MapData() { MapName = fileName };
+        saves.Rect = rect;
+
         saves[MapController.Layer.Background] = background.data;
         saves[MapController.Layer.Middleground] = middleground.data;
         saves[MapController.Layer.Foreground] = foreground.data;
-        Debug.Log(background.data);
-        
 
         handler.Save(savePath, saves);
+        Debug.Log("Successfully saved the map!");
     }
 
     private void Initialize()
@@ -163,6 +175,8 @@ public class MapInspectorEditor : Editor
 
         foreground = new Map(mapSaver.foreground, new TilemapData(MapController.Layer.Foreground));
         mapSaver.foreground.ClearAllTiles();
+
+        rect = new RectInt();
     }
     private void Clear()
     {

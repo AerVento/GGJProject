@@ -1,39 +1,254 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <map>
-  <Background>
-    <block id="1">
-      <position x="-3" y="-1" z="0" />
-    </block>
-    <block id="1">
-      <position x="-2" y="-1" z="0" />
-    </block>
-    <block id="1">
-      <position x="-1" y="-1" z="0" />
-    </block>
-  </Background>
+  <rect xMin="-9" xMax="8" yMin="-7" yMax="7" />
+  <Background />
   <Middleground>
     <block id="1">
-      <position x="2" y="0" z="0" />
+      <position x="-8" y="-7" z="0" />
     </block>
     <block id="1">
-      <position x="2" y="-1" z="0" />
+      <position x="-7" y="-7" z="0" />
     </block>
     <block id="1">
-      <position x="2" y="-2" z="0" />
+      <position x="-6" y="-7" z="0" />
     </block>
-  </Middleground>
-  <Foreground>
     <block id="1">
-      <position x="5" y="0" z="0" />
+      <position x="-5" y="-7" z="0" />
+    </block>
+    <block id="1">
+      <position x="-4" y="-7" z="0" />
+    </block>
+    <block id="1">
+      <position x="-3" y="-7" z="0" />
+    </block>
+    <block id="1">
+      <position x="-2" y="-7" z="0" />
+    </block>
+    <block id="1">
+      <position x="-1" y="-7" z="0" />
+    </block>
+    <block id="1">
+      <position x="0" y="-7" z="0" />
+    </block>
+    <block id="1">
+      <position x="1" y="-7" z="0" />
+    </block>
+    <block id="1">
+      <position x="2" y="-7" z="0" />
+    </block>
+    <block id="1">
+      <position x="3" y="-7" z="0" />
+    </block>
+    <block id="1">
+      <position x="4" y="-7" z="0" />
+    </block>
+    <block id="1">
+      <position x="5" y="-7" z="0" />
+    </block>
+    <block id="1">
+      <position x="6" y="-7" z="0" />
+    </block>
+    <block id="1">
+      <position x="7" y="-7" z="0" />
+    </block>
+    <block id="1">
+      <position x="-8" y="7" z="0" />
+    </block>
+    <block id="1">
+      <position x="-7" y="7" z="0" />
+    </block>
+    <block id="1">
+      <position x="-5" y="7" z="0" />
+    </block>
+    <block id="1">
+      <position x="-6" y="7" z="0" />
+    </block>
+    <block id="1">
+      <position x="-4" y="7" z="0" />
+    </block>
+    <block id="1">
+      <position x="-3" y="7" z="0" />
+    </block>
+    <block id="1">
+      <position x="-2" y="7" z="0" />
+    </block>
+    <block id="1">
+      <position x="-1" y="7" z="0" />
+    </block>
+    <block id="1">
+      <position x="0" y="7" z="0" />
+    </block>
+    <block id="1">
+      <position x="2" y="7" z="0" />
+    </block>
+    <block id="1">
+      <position x="1" y="7" z="0" />
+    </block>
+    <block id="1">
+      <position x="3" y="7" z="0" />
+    </block>
+    <block id="1">
+      <position x="4" y="7" z="0" />
+    </block>
+    <block id="1">
+      <position x="5" y="7" z="0" />
+    </block>
+    <block id="1">
+      <position x="6" y="7" z="0" />
+    </block>
+    <block id="1">
+      <position x="7" y="7" z="0" />
+    </block>
+    <block id="1">
+      <position x="-8" y="4" z="0" />
+    </block>
+    <block id="1">
+      <position x="-7" y="4" z="0" />
+    </block>
+    <block id="1">
+      <position x="-6" y="4" z="0" />
+    </block>
+    <block id="1">
+      <position x="-5" y="4" z="0" />
+    </block>
+    <block id="1">
+      <position x="-4" y="4" z="0" />
+    </block>
+    <block id="1">
+      <position x="3" y="4" z="0" />
+    </block>
+    <block id="1">
+      <position x="4" y="4" z="0" />
+    </block>
+    <block id="1">
+      <position x="5" y="4" z="0" />
+    </block>
+    <block id="1">
+      <position x="6" y="4" z="0" />
+    </block>
+    <block id="1">
+      <position x="7" y="4" z="0" />
+    </block>
+    <block id="1">
+      <position x="-8" y="-1" z="0" />
+    </block>
+    <block id="1">
+      <position x="-7" y="-1" z="0" />
+    </block>
+    <block id="1">
+      <position x="-6" y="-1" z="0" />
+    </block>
+    <block id="1">
+      <position x="-5" y="-1" z="0" />
+    </block>
+    <block id="1">
+      <position x="-4" y="-1" z="0" />
+    </block>
+    <block id="1">
+      <position x="3" y="-1" z="0" />
     </block>
     <block id="1">
       <position x="4" y="-1" z="0" />
     </block>
     <block id="1">
-      <position x="5" y="-2" z="0" />
+      <position x="5" y="-1" z="0" />
     </block>
     <block id="1">
       <position x="6" y="-1" z="0" />
     </block>
-  </Foreground>
+    <block id="1">
+      <position x="7" y="-1" z="0" />
+    </block>
+    <block id="1">
+      <position x="-9" y="-7" z="0" />
+    </block>
+    <block id="1">
+      <position x="-9" y="-5" z="0" />
+    </block>
+    <block id="1">
+      <position x="-9" y="-4" z="0" />
+    </block>
+    <block id="1">
+      <position x="-9" y="-3" z="0" />
+    </block>
+    <block id="1">
+      <position x="-9" y="-2" z="0" />
+    </block>
+    <block id="1">
+      <position x="-9" y="-1" z="0" />
+    </block>
+    <block id="1">
+      <position x="-9" y="0" z="0" />
+    </block>
+    <block id="1">
+      <position x="-9" y="1" z="0" />
+    </block>
+    <block id="1">
+      <position x="-9" y="2" z="0" />
+    </block>
+    <block id="1">
+      <position x="-9" y="3" z="0" />
+    </block>
+    <block id="1">
+      <position x="-9" y="4" z="0" />
+    </block>
+    <block id="1">
+      <position x="-9" y="5" z="0" />
+    </block>
+    <block id="1">
+      <position x="-9" y="6" z="0" />
+    </block>
+    <block id="1">
+      <position x="-9" y="7" z="0" />
+    </block>
+    <block id="1">
+      <position x="8" y="-7" z="0" />
+    </block>
+    <block id="1">
+      <position x="8" y="-6" z="0" />
+    </block>
+    <block id="1">
+      <position x="8" y="-5" z="0" />
+    </block>
+    <block id="1">
+      <position x="8" y="-4" z="0" />
+    </block>
+    <block id="1">
+      <position x="8" y="-3" z="0" />
+    </block>
+    <block id="1">
+      <position x="8" y="-2" z="0" />
+    </block>
+    <block id="1">
+      <position x="8" y="-1" z="0" />
+    </block>
+    <block id="1">
+      <position x="8" y="0" z="0" />
+    </block>
+    <block id="1">
+      <position x="8" y="1" z="0" />
+    </block>
+    <block id="1">
+      <position x="8" y="2" z="0" />
+    </block>
+    <block id="1">
+      <position x="8" y="3" z="0" />
+    </block>
+    <block id="1">
+      <position x="8" y="4" z="0" />
+    </block>
+    <block id="1">
+      <position x="8" y="5" z="0" />
+    </block>
+    <block id="1">
+      <position x="8" y="6" z="0" />
+    </block>
+    <block id="1">
+      <position x="8" y="7" z="0" />
+    </block>
+    <block id="1">
+      <position x="-9" y="-6" z="0" />
+    </block>
+  </Middleground>
+  <Foreground />
 </map>

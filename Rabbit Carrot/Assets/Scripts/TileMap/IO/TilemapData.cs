@@ -39,7 +39,18 @@ public class TilemapData : IEnumerable<TilemapData.BlockData>
         }
         return false;
     }
-
+    public BlockData this[Vector3Int gridPos]
+    {
+        get
+        {
+            return Blocks.Find((block) => block.Position == gridPos);
+        }
+        set
+        {
+            int index = Blocks.FindIndex((block) => block.Position == gridPos);
+            Blocks[index] = value;
+        }
+    }
     public IEnumerator<BlockData> GetEnumerator()
     {
         return ((IEnumerable<BlockData>)Blocks).GetEnumerator();

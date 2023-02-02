@@ -8,7 +8,6 @@ public class Main : MonoBehaviour
     public GameObject bullet;
     void Awake()
     {
-        MapController.Instance.Load("Assets/XmlTileMapData/TestMap.xml");
         GameController.Instance.GameStart();
     }
     // Update is called once per frame

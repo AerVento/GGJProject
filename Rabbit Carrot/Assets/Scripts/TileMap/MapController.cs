@@ -8,7 +8,7 @@ using UnityEngine.Tilemaps;
 /// <summary>
 /// Controller for displaying tiles.
 /// </summary>
-public class MapController : Singleton<MapController>
+public class MapController
 {
     /// <summary>
     /// Tilemap Layer
@@ -40,10 +40,43 @@ public class MapController : Singleton<MapController>
     /// For non-solid blocks.
     /// </summary>
     private Tilemap foreground;
+
+    private Grid grid;
     /// <summary>
     /// Grid of all tilemap.
     /// </summary>
-    private Grid grid;
+    public Grid Grid
+    {
+        get => grid;
+    }
+    /// <summary>
+    /// The map data.
+    /// </summary>
+    private MapData data;
+
+    /// <summary>
+    /// The rect of map area in grid position.
+    /// </summary>
+    public RectInt MapGridRect
+    {
+        get
+        {
+            return data.Rect;
+        }
+    }
+    /// <summary>
+    /// The rect of map area in world position.
+    /// </summary>
+    public Rect MapWorldRect
+    {
+        get
+        {
+            Vector3 max = TransformGridPosToWorldPos(new Vector3Int(data.Rect.max.x, data.Rect.max.y));
+            Vector3 min = TransformGridPosToWorldPos(new Vector3Int(data.Rect.min.x, data.Rect.min.y));
+            return new Rect(min.x, min.y, max.x - min.x, max.y - min.y);
+        }
+    }
+
 
     /// <summary>
     /// Initialize the map.
@@ -72,18 +105,19 @@ public class MapController : Singleton<MapController>
     public void Load(string mapFilePath)
     {
         XmlMapHandler handler = new XmlMapHandler();
-        foreach (var pair in handler.Load(mapFilePath))//不能直接覆盖，因为在下面修改时还会在调用一遍修改函数
+        data = handler.Load(mapFilePath);
+        foreach (var pair in data)//不能直接覆盖，因为在下面修改时还会在调用一遍修改函数
         {
             Tilemap map;
             switch (pair.layer)
             {
-                case MapController.Layer.Background:
+                case Layer.Background:
                     map = background;
                     break;
-                case MapController.Layer.Middleground:
+                case Layer.Middleground:
                     map = middleground;
                     break;
-                case MapController.Layer.Foreground:
+                case Layer.Foreground:
                     map = foreground;
                     break;
                 default: return;
@@ -93,5 +127,13 @@ public class MapController : Singleton<MapController>
                 map.SetTile(block.Position, BlockTileSO.Instance.GetTile(block.BlockId));
             }
         }
+    }
+    public Vector3 TransformGridPosToWorldPos(Vector3Int gridPos)
+    {
+        return grid.CellToWorld(gridPos);
+    }
+    public Vector3Int TransformWorldPosToGridPos(Vector3 worldPos)
+    {
+        return grid.WorldToCell(worldPos);
     }
 }

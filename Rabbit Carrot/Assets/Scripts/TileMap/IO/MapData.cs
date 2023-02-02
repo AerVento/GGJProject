@@ -19,6 +19,11 @@ public class MapData :IEnumerable<MapData.Pair>
         }
     }
     
+    /// <summary>
+    /// The rect of the tilemap area.
+    /// </summary>
+    public RectInt Rect { get; set; }
+    
     private TilemapData[] data;
     public MapData()
     {
