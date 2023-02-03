@@ -46,5 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 1160211120492223783, guid: 1014a5276c966b84caa58723ef3937a6, type: 3}
   carrotPrefab: {fileID: 4160115608520366198, guid: 1d20e9d550c905b4e84905f055202f61, type: 3}
-  scoreToWin: 50
+  scoreToWin: 1000
   virtualCamera: {fileID: 0}
