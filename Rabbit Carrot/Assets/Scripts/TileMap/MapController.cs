@@ -53,6 +53,17 @@ public class MapController
     /// The map data.
     /// </summary>
     private MapData data;
+    
+    /// <summary>
+    /// All solid blocks of the map.
+    /// </summary>
+    public TilemapData.BlockData[] SolidBlocks
+    {
+        get
+        {
+            return data[Layer.Middleground].Blocks.ToArray();
+        }
+    }
 
     /// <summary>
     /// The rect of map area in grid position.
@@ -71,9 +82,18 @@ public class MapController
     {
         get
         {
-            Vector3 max = TransformGridPosToWorldPos(new Vector3Int(data.Rect.max.x, data.Rect.max.y));
-            Vector3 min = TransformGridPosToWorldPos(new Vector3Int(data.Rect.min.x, data.Rect.min.y));
-            return new Rect(min.x, min.y, max.x - min.x, max.y - min.y);
+            ////Use map data as the rect of world area.
+            //Vector3 max = TransformGridPosToWorldPos(new Vector3Int(data.Rect.max.x, data.Rect.max.y));
+            //Vector3 min = TransformGridPosToWorldPos(new Vector3Int(data.Rect.min.x, data.Rect.min.y));
+            //return new Rect(min.x, min.y, max.x - min.x, max.y - min.y);
+
+            //Use the view port of main camera as the rect of world area.
+            Rect rect = new Rect();
+            Vector3 min = Camera.main.ScreenToWorldPoint(new Vector3(0, 0));
+            Vector3 max = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height));
+            rect.min = min;
+            rect.max = max;
+            return rect;
         }
     }
 
@@ -83,24 +103,22 @@ public class MapController
     /// </summary>
     public MapController()
     {
-        GameObject obj = new GameObject("Tilemaps");
-        grid = obj.AddComponent<Grid>();
-
-        GameObject back = new GameObject("Background");
-        background = back.AddComponent<Tilemap>();
-        back.AddComponent<TilemapRenderer>();
-        background.transform.SetParent(obj.transform);
-
-        GameObject middle = new GameObject("Middleground");
-        middleground = middle.AddComponent<Tilemap>();
-        middle.AddComponent<TilemapRenderer>();
-        middle.AddComponent<TilemapCollider2D>(); //Add collider for blocks on middle ground
-        middleground.transform.SetParent(obj.transform);
-
-        GameObject fore = new GameObject("Foreground");
-        foreground = fore.AddComponent<Tilemap>();
-        fore.AddComponent<TilemapRenderer>();
-        foreground.transform.SetParent(obj.transform);
+        GameObject prefab = ResourceManager.Instance.Load<GameObject>("Prefabs/Tilemaps");
+        GameObject maps = GameObject.Instantiate(prefab);
+        grid = maps.GetComponent<Grid>();
+        Tilemap[] tilemaps = maps.GetComponentsInChildren<Tilemap>();
+        for (int i = 0; i < tilemaps.Length; i++)
+        {
+            switch (tilemaps[i].gameObject.name)
+            {
+                case "Background":
+                    background = tilemaps[i]; break;
+                case "Middleground":
+                    middleground = tilemaps[i]; break;
+                case "Foreground":
+                    foreground = tilemaps[i]; break;
+            }
+        }
     }
     public void Load(string mapFilePath)
     {

@@ -6,24 +6,21 @@ public class PlayerController
 {
     private PlayerData data = new PlayerData();
     public int Score { get => data.Score; }
-    
-    private GameObject playerPrefab;
+
     private PlayerBehaviour playerInstance;
+    /// <summary>
+    /// The behaviour component of player.
+    /// </summary>
     public PlayerBehaviour Player
     {
         get
         {
-            if (playerInstance == null)
-            {
-                playerInstance = GameObject.Instantiate(playerPrefab).GetComponent<PlayerBehaviour>();
-            }
             return playerInstance;
         }
     }
-
     public PlayerController(GameObject playerPrefab)
     {
-        this.playerPrefab = playerPrefab;
+        playerInstance = GameObject.Instantiate(playerPrefab).GetComponent<PlayerBehaviour>();
     }
 
     /// <summary>
@@ -43,10 +40,11 @@ public class PlayerController
         data.Score -= value;
     }
     /// <summary>
-    /// Reset the player.
+    /// Dispose the player.
     /// </summary>
-    public void Reset()
+    public void Dispose()
     {
-
+        GameObject.Destroy(playerInstance.Mole.gameObject);
+        GameObject.Destroy(playerInstance.gameObject);
     }
 }

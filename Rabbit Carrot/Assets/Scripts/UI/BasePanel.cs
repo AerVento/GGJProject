@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -17,7 +18,7 @@ public class BasePanel : MonoBehaviour
         FindChildrenControls<Button>();
         FindChildrenControls<Image>();
         FindChildrenControls<Slider>();
-        FindChildrenControls<Text>();
+        FindChildrenControls<TextMeshProUGUI>();
         FindChildrenControls<Dropdown>();
         FindChildrenControls<InputField>();
     }

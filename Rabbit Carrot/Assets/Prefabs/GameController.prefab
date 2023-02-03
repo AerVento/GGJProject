@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6164728478458071526}
   m_Layer: 0
   m_Name: GameController
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,3 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 1160211120492223783, guid: 1014a5276c966b84caa58723ef3937a6, type: 3}
+  carrotPrefab: {fileID: 4160115608520366198, guid: 1d20e9d550c905b4e84905f055202f61, type: 3}
+  scoreToWin: 50
+  virtualCamera: {fileID: 0}

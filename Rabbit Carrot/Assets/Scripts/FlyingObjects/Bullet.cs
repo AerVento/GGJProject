@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,9 +8,17 @@ using UnityEngine;
 /// </summary>
 public class Bullet : FlyingObject
 {
-    [SerializeField]
+
     private float bulletSpeed;
-    public float Speed { get => bulletSpeed; set { bulletSpeed = value; } }
+    public float Speed
+    {
+        get => bulletSpeed;
+        set
+        {
+            bulletSpeed = value;
+            Rigid.velocity = transform.right * bulletSpeed;
+        }
+    }
 
     private SpriteRenderer spriteRenderer;
     private SpriteRenderer SpriteRenderer
@@ -21,6 +30,19 @@ public class Bullet : FlyingObject
                 spriteRenderer = GetComponent<SpriteRenderer>();
             }
             return spriteRenderer;
+        }
+    }
+
+    private Rigidbody2D rigid;
+    private Rigidbody2D Rigid
+    {
+        get
+        {
+            if (rigid == null)
+            {
+                rigid = GetComponent<Rigidbody2D>();
+            }
+            return rigid;
         }
     }
 
@@ -44,5 +66,56 @@ public class Bullet : FlyingObject
     private void Update()
     {
         transform.position += bulletSpeed * Time.deltaTime * transform.right;
+        if(!GameController.Instance.MapController.MapWorldRect.Contains(transform.position)) 
+        { 
+            DestroySelf();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        bool CheckTerrain()
+        {
+            if (collision.gameObject.tag == "Terrain") //碰到地形摧毁自己
+            {
+                DestroySelf();
+                return true;
+            }
+            else
+                return false;
+        }
+        bool CheckRoot()
+        {
+            Root root = collision.GetComponent<Root>();
+            if (root != null && root.Team != Team)
+            {
+                DestroySelf();
+                root.DestroyRoot();
+                return true;
+            }
+            return false;
+        }
+        bool CheckBouncePad()
+        {
+            IBouncePad pad = collision.GetComponent<IBouncePad>();
+            if(pad != null && pad.SourceTeam == Team)
+            {
+                Team = pad.TargetTeam;
+                transform.right = pad.GetBouncedDirection(transform.right, transform.position);
+                rigid.velocity = transform.right * bulletSpeed;
+                return true;
+            }
+            return false;
+        }
+        Func<bool>[] operations = new Func<bool>[] { CheckTerrain, CheckRoot, CheckBouncePad };
+        foreach(var func in operations)
+        {
+            if (func.Invoke() == true)
+                return;
+        }
+    }
+    private void DestroySelf()
+    {
+        GameController.Instance.FlyingObjectsController.RemoveFlying<Bullet>(gameObject);
     }
 }

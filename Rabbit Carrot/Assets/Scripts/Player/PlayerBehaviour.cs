@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -11,59 +12,89 @@ public class PlayerBehaviour : MonoBehaviour
     [Header("鼹鼠移动速度")]
     public float moleSpeed;
     [SerializeField]
-    [Header("鼹鼠物体")]
-    private GameObject mole;
+    [Header("鼹鼠预制体")]
+    private GameObject molePrefab;
 
+
+    [SerializeField]
+    [Header("根")]
+    private Root root;
+    [SerializeField]
+    [Header("玩家角色")]
+    private GameObject playerBody;
+
+    private GameObject moleInstance;
     private InputCalculator calculator;
+
+    /// <summary>
+    /// The world position of player body.
+    /// </summary>
+    public Vector3 PlayerPosition { get => playerBody.transform.position; }
+
+    public Mole Mole
+    {
+        get => moleInstance.GetComponent<Mole>();
+    }
+
+    public void Climb(float deltaDistance)
+    {
+        root.RootLength -= deltaDistance; //向上移动意味着根要缩短
+        playerBody.transform.position += Vector3.up * deltaDistance;
+    }
+    public void MoveMole(float offset)
+    {
+        moleInstance.transform.position += Vector3.right * offset;
+    }
 
     void OperationHandle(E_PlayerOperation[] operations)
     {
+
         Rect worldAreaRect = GameController.Instance.MapController.MapWorldRect;
-        worldAreaRect.yMin += GameController.Instance.MapController.Grid.cellSize.y; //格子算出来的世界坐标都在格子的底边，在向下移动时会穿过方块，因此加1个格子高度来防止出界
+
         foreach (E_PlayerOperation operation in operations)
         {
             switch (operation)
             {
                 case E_PlayerOperation.ClimbUp:
                     //兔子角色向上移动,并且y轴不超过9.5f
-                    if (this.transform.position.y < worldAreaRect.yMax)
+                    if (playerBody.transform.position.y < worldAreaRect.yMax)
                     {
-                        this.transform.position += new Vector3(0, rabbitSpeed * Time.deltaTime, 0);
+                        Climb(rabbitSpeed * Time.deltaTime);
                     }
                     break;
                 case E_PlayerOperation.ClimbDown:
                     //兔子角色向下移动,并且y轴不低于-8f
-                    if (this.transform.position.y > worldAreaRect.yMin)
+                    if (playerBody.transform.position.y > worldAreaRect.yMin)
                     {
-                        this.transform.position -= new Vector3(0, rabbitSpeed * Time.deltaTime, 0);
+                        Climb(-rabbitSpeed * Time.deltaTime);
                     }
                     break;
                 case E_PlayerOperation.ClimbUpQuick:
                     //兔子角色以两倍的速度向上移动,并且y轴不超过9.5f
-                    if (this.transform.position.y < worldAreaRect.yMax)
+                    if (playerBody.transform.position.y < worldAreaRect.yMax)
                     {
-                        this.transform.position += new Vector3(0, rabbitSpeed * extraSpeedPercent * Time.deltaTime, 0);
+                        Climb(rabbitSpeed * extraSpeedPercent * Time.deltaTime);
                     }
                     break;
                 case E_PlayerOperation.ClimbDownQuick:
                     //兔子角色向下移动,并且y轴不低于-8f
-                    if (this.transform.position.y > worldAreaRect.yMin)
+                    if (playerBody.transform.position.y > worldAreaRect.yMin)
                     {
-                        this.transform.position -= new Vector3(0, rabbitSpeed * extraSpeedPercent * Time.deltaTime, 0);
+                        Climb(-rabbitSpeed * extraSpeedPercent * Time.deltaTime);
                     }
                     break;
                 case E_PlayerOperation.MoleMoveLeft:
                     //鼹鼠角色向左移动,并且y轴不小于-7f
-                    if (mole.transform.position.x > worldAreaRect.xMin)
+                    if (moleInstance.transform.position.x > worldAreaRect.xMin)
                     {
-                        mole.transform.position -= new Vector3(moleSpeed * Time.deltaTime, 0);
+                        MoveMole(-moleSpeed * Time.deltaTime);
                     }
                     break;
                 case E_PlayerOperation.MoleMoveRight:
                     //鼹鼠角色向右移动,并且y轴不超过7f
-                    if (mole.transform.position.x < worldAreaRect.xMax)
+                    if (moleInstance.transform.position.x < worldAreaRect.xMax)
                     {
-                        mole.transform.position += new Vector3(moleSpeed * Time.deltaTime, 0);
+                        MoveMole(moleSpeed * Time.deltaTime);
                     }
                     break;
                 default:
@@ -77,6 +108,8 @@ public class PlayerBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        moleInstance = Instantiate(molePrefab);
+
         calculator = new InputCalculator();
 
         calculator.ClimbUpKey = (KeyCodeSource)KeyCode.W;
@@ -84,6 +117,7 @@ public class PlayerBehaviour : MonoBehaviour
         calculator.MoveLeftKey = (KeyCodeSource)KeyCode.A;
         calculator.MoveRightKey = (KeyCodeSource)KeyCode.D;
         calculator.StartListening();
+
     }
 
     // Update is called once per frame

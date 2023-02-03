@@ -7,6 +7,10 @@ public class GameController : MonoSingleton<GameController>
 {
     [SerializeField]
     private GameObject playerPrefab;
+    [SerializeField]
+    private GameObject carrotPrefab;
+    [SerializeField]
+    private int scoreToWin;
     
     private PlayerController playerController;
     public PlayerController PlayerController { get => playerController; }
@@ -19,6 +23,8 @@ public class GameController : MonoSingleton<GameController>
 
     private MapController mapController;
     public MapController MapController { get => mapController; }
+
+    private CarrotsRefresher refresher;
 
     [Header("¸úËæÍæ¼ÒµÄÐéÄâÉãÏñ»ú")]
     [SerializeField]
@@ -33,7 +39,13 @@ public class GameController : MonoSingleton<GameController>
     {
         
     }
-
+    private void Update()
+    {
+        if(IsPlaying && playerController.Score >= scoreToWin)
+        {
+            GameEnd(true);
+        }
+    }
     public void GameStart()
     {
         void InitializeCamera()
@@ -59,16 +71,25 @@ public class GameController : MonoSingleton<GameController>
 
         IsPlaying = true;
         playerController = new PlayerController(playerPrefab);
-        carrotsController = new CarrotsController();
+        carrotsController = new CarrotsController(carrotPrefab);
         flyingObjectsController = new FlyingObjectsController();
         mapController = new MapController();
         mapController.Load("Assets/XmlTileMapData/TestMap.xml");
+        refresher = new RandomCarrotsRefresher();
+        refresher.StartRefreshing();
 
-        InitializeCamera();
+        //InitializeCamera();
     }
 
    public void GameEnd(bool result)
     {
-        IsPlaying= false;
+        IsPlaying = false;
+        playerController.Dispose();
+        carrotsController.ClearAllCarrots();
+        flyingObjectsController.Clear();
+        Destroy(mapController.Grid.gameObject);
+        refresher.StopRefreshing();
+
+        UIManager.Instance.ShowPanel<ResultPanel>("ResultPanel",UIManager.UILayer.Mid,(panel) => panel.Label = result?"Victory":"Defeat");
     }
 }
