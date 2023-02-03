@@ -101,8 +101,7 @@ public class Bullet : FlyingObject
             if(pad != null && pad.SourceTeam == Team)
             {
                 Team = pad.TargetTeam;
-                transform.right = pad.GetBouncedDirection(transform.right, transform.position);
-                rigid.velocity = transform.right * bulletSpeed;
+                pad.Bounce(this);
                 return true;
             }
             return false;

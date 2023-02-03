@@ -18,8 +18,6 @@ public interface IBouncePad
     /// <summary>
     /// Get bounced bullets direction.
     /// </summary>
-    /// <param name="bulletDirection"></param>
-    /// <param name="bulletPosition"></param>
-    /// <returns></returns>
-    public Vector3 GetBouncedDirection(Vector3 bulletDirection, Vector3 bulletPosition);
+    /// <param name="bullet">Bullet component.</param>
+    public void Bounce(Bullet bullet);
 }

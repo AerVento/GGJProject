@@ -11,6 +11,14 @@ public class CarrotBehaviour : MonoBehaviour
     [Header("根")]
     [SerializeField]
     private Root root;
+
+    [Header("在攻击时子弹目标位置向上偏移的最小值")]
+    [SerializeField]
+    private float minUpChange;
+    [Header("在攻击时子弹目标位置向上偏移的最大值")]
+    [SerializeField]
+    private float maxUpChange;
+
     /// <summary>
     /// The status carrot at.
     /// </summary>
@@ -165,7 +173,7 @@ public class CarrotBehaviour : MonoBehaviour
         {
             bullet.Team = E_Team.Carrots;
             Vector3 target = GameController.Instance.PlayerController.Player.PlayerPosition;
-            Vector3 random = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
+            Vector3 random = new Vector3(0, Random.Range(minUpChange,maxUpChange));
             bullet.transform.right = target + random - body.transform.position;
             bullet.Speed = BulletSpeed;
         });

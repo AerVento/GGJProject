@@ -10,7 +10,7 @@ using UnityEngine.Events;
 /// <summary>
 /// Manager of audios in game.
 /// </summary>
-public class AudioManager:Singleton<AudioManager>
+public class AudioManager : MonoSingleton<AudioManager>
 {
     private const string PLAYERPREFS_NAME_OF_MUISC_VOLUME = "MusicVolume";
     private const string PLAYERPREFS_NAME_OF_EFFECTVOLUME = "EffectVolume";
@@ -21,60 +21,31 @@ public class AudioManager:Singleton<AudioManager>
     /// </summary>
     public AudioSource MusicSource => musicSource;
 
-
-    private GameObject effectSource;
-    /// <summary>
-    /// Original prefab of effect source.
-    /// </summary>
-    public GameObject EffectPrefab
-    {
-        get
-        {
-            if (effectSource == null)
-                throw new System.InvalidOperationException("The prefab of effect source was not setted yet.");
-            return effectSource;
-        }
-        set => effectSource = value;
-    }
+    [SerializeField]
+    private GameObject effectSourcePrefab;
 
     /// <summary>
     /// The object buffer which contained all effect sources.
     /// </summary>
     private ObjectBuffer effectSourceBuffer;
+
+    /// <summary>
+    /// The database of background music.
+    /// </summary>
+    [SerializeField]
+    private AudioSO musicDatabase;
+
+    /// <summary>
+    /// The database of effect audio.
+    /// </summary>
+    [SerializeField]
+    private AudioSO effectDatabase;
+
     /// <summary>
     /// The list of all effect source which is operating at present.
     /// </summary>
     private List<AudioSource> effectSourceList = new List<AudioSource>();
-    
-    private AudioDatabase musicDatabase;
-    /// <summary>
-    /// The database of music clip.
-    /// </summary>
-    public AudioDatabase BackgroundMusicDatabase
-    {
-        get
-        {
-            if (musicDatabase == null)
-                throw new System.InvalidOperationException("The database of music audio clip was not setted yet.");
-            return musicDatabase;
-        }
-        set => musicDatabase = value;
-    }
 
-    private AudioDatabase effectDatabase;
-    /// <summary>
-    /// The database of effect audio.
-    /// </summary>
-    private AudioDatabase EffectAudios
-    {
-        get
-        {
-            if (effectDatabase == null)
-                throw new System.InvalidOperationException("The database of effect audio clip was not setted yet.");
-            return effectDatabase;
-        }
-        set => effectDatabase = value;
-    }
 
     private float musicVolume = 1;
     /// <summary>
@@ -124,7 +95,7 @@ public class AudioManager:Singleton<AudioManager>
     /// <summary>
     /// Initialize when activated.
     /// </summary>
-    public AudioManager()
+    public void Awake()
     {
         GameObject obj = new GameObject("AudioSource");
 
@@ -152,7 +123,7 @@ public class AudioManager:Singleton<AudioManager>
     /// <returns>The audio clip of the music.</returns>
     public AudioClip PlayRandomBackgroundMusic()
     {
-        AudioClip audio = BackgroundMusicDatabase.GetRandomAudio();
+        AudioClip audio = musicDatabase.GetRandomAudio();
         musicSource.clip = audio;
         musicSource.volume = musicVolume;
         musicSource.Play();
@@ -165,7 +136,7 @@ public class AudioManager:Singleton<AudioManager>
     /// <returns>The audio clip of music.</returns>
     public AudioClip PlayBackgroundMusic(string musicName)
     {
-        AudioClip audio = BackgroundMusicDatabase.GetAudio(musicName);
+        AudioClip audio = musicDatabase.GetAudio(musicName);
         musicSource.clip = audio;
         musicSource.volume = musicVolume;
         musicSource.Play();
@@ -228,10 +199,10 @@ public class AudioManager:Singleton<AudioManager>
         {
             yield return new WaitForSeconds(time);
             effectSourceList.Remove(source);
-            effectSourceBuffer.Put(effectSource, source.gameObject);
+            effectSourceBuffer.Put(effectSourcePrefab, source.gameObject);
         }
-        AudioSource source = effectSourceBuffer.Get(effectSource).GetComponent<AudioSource>();
-        source.clip =  EffectAudios.GetAudio(name);
+        AudioSource source = effectSourceBuffer.Get(effectSourcePrefab).GetComponent<AudioSource>();
+        source.clip =  effectDatabase.GetAudio(name);
         source.volume = effectVolume;
         source.Play();
         effectSourceList.Add(source);
@@ -249,13 +220,13 @@ public class AudioManager:Singleton<AudioManager>
         {
             yield return new WaitForSeconds(time);
             effectSourceList.Remove(source);
-            effectSourceBuffer.Put(effectSource, source.gameObject);
+            effectSourceBuffer.Put(effectSourcePrefab, source.gameObject);
         }
         System.Random r = new System.Random();
         int index = r.Next(0, names.Length);
 
-        AudioSource source = effectSourceBuffer.Get(effectSource).GetComponent<AudioSource>();
-        source.clip = EffectAudios.GetAudio(names[index]);
+        AudioSource source = effectSourceBuffer.Get(effectSourcePrefab).GetComponent<AudioSource>();
+        source.clip = effectDatabase.GetAudio(names[index]);
         source.Play();
         source.volume = effectVolume;
         effectSourceList.Add(source);
@@ -272,27 +243,9 @@ public class AudioManager:Singleton<AudioManager>
         {
             source.Stop();
             effectSourceList.Remove(source);
-            effectSourceBuffer.Put(effectSource,source.gameObject);
+            effectSourceBuffer.Put(effectSourcePrefab,source.gameObject);
         }
     }
 
     #endregion
 }
-/// <summary>
-/// Abstract collection of audio clip.
-/// </summary>
-public abstract class AudioDatabase: UnityEngine.Object
-{
-    /// <summary>
-    /// Get a audio clip randomly in collection.
-    /// </summary>
-    /// <returns>A random audio clip.</returns>
-    public abstract AudioClip GetRandomAudio();
-    /// <summary>
-    /// Get a audio clip specified with the given audio name.
-    /// </summary>
-    /// <param name="audioName">The name of the audio clip.</param>
-    /// <returns>The audio clip.</returns>
-    public abstract AudioClip GetAudio(string audioName);
-}
-
