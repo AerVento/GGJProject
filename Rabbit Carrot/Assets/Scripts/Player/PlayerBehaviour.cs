@@ -112,10 +112,10 @@ public class PlayerBehaviour : MonoBehaviour
 
         calculator = new InputCalculator();
 
-        //calculator.ClimbUpKey = (MouseSource)0;
-        //calculator.ClimbDownKey = (MouseSource)1;
-        calculator.ClimbUpKey = (KeyCodeSource)KeyCode.W;
-        calculator.ClimbDownKey = (KeyCodeSource)KeyCode.S;
+        calculator.ClimbUpKey = (MouseSource)0;
+        calculator.ClimbDownKey = (MouseSource)1;
+        //calculator.ClimbUpKey = (KeyCodeSource)KeyCode.W;
+        //calculator.ClimbDownKey = (KeyCodeSource)KeyCode.S;
         calculator.MoveLeftKey = (KeyCodeSource)KeyCode.LeftArrow;
         calculator.MoveRightKey = (KeyCodeSource)KeyCode.RightArrow;
         calculator.StartListening();

@@ -44,6 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75d38aab8bc414642b7a619c28c82bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectSourcePrefab: {fileID: 0}
-  musicDatabase: {fileID: 0}
-  effectDatabase: {fileID: 0}
+  effectSourcePrefab: {fileID: 3318848991878538893, guid: 461a86fe5aec28c4c90c8996686131b2, type: 3}
+  musicDatabase: {fileID: 11400000, guid: 26a23d60a77ef22449255f40c50e395c, type: 2}
+  effectDatabase: {fileID: 11400000, guid: 3793ed7d732809a41956acadf0f4c92d, type: 2}
