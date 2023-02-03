@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f5dce407c166064e92978899856449d, type: 3}
   m_Name: MusicSO
   m_EditorClassIdentifier: 
-  audioList: []
+  audioList:
+  - Clip: {fileID: 8300000, guid: b5a6594ac58aa5c43a0680794bea572b, type: 3}
+    Name: 

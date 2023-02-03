@@ -45,7 +45,7 @@ public class CarrotBehaviour : MonoBehaviour
     /// <summary>
     /// The flying speed of bullet.
     /// </summary>
-    public float BulletSpeed { get; set; } = 3.5f;
+    public float BulletSpeed { get; set; } = 2f;
     /// <summary>
     /// The rotate angle of root.
     /// </summary>

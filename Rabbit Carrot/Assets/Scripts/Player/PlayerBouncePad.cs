@@ -25,6 +25,7 @@ public class PlayerBouncePad : MonoBehaviour, IBouncePad
         if(bullet != null) 
         {
             bullet.gameObject.SetActive(true);
+            bullet.transform.position = transform.position;
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             bullet.transform.right = new Vector3(worldPos.x, worldPos.y) - GameController.Instance.PlayerController.Player.PlayerPosition;
             bullet.Speed = originalSpeed;
