@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class InputCalculator
 {
@@ -367,7 +368,8 @@ public class MouseSource : InputSource
 
     public bool GetInputStatus()
     {
-        return Input.GetMouseButton(mouseBtn);
+
+        return Input.GetMouseButton(mouseBtn) && !EventSystem.current.IsPointerOverGameObject();
     }
     public override string ToString()
     {

@@ -12,16 +12,22 @@ public class ResultPanel : BasePanel
     private Sprite loseLabelSprite;
     protected override void BeforeShow()
     {
-        GetControl<Button>("BackToTitleBtn").onClick.AddListener(BackToTitle);
+        GetControl<Button>("PlayAgainBtn").onClick.AddListener(PlayAgain);
+        GetControl<Button>("QuitBtn").onClick.AddListener(Quit);
     }
     protected override void BeforeHide()
     {
-        GetControl<Button>("BackToTitleBtn").onClick.RemoveListener(BackToTitle);
+        GetControl<Button>("PlayAgainBtn").onClick.RemoveListener(PlayAgain);
+        GetControl<Button>("QuitBtn").onClick.RemoveListener(Quit);
     }
-    void BackToTitle()
+    void PlayAgain()
     {
         Hide();
-        UIManager.Instance.ShowPanel<TitlePanel>("TitlePanel");
+        GameController.Instance.GameStart();
+    }
+    private void Quit()
+    {
+        Application.Quit();
     }
     public void SetResult(bool result)
     {

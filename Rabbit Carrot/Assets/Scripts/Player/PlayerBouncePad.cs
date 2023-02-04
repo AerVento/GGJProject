@@ -28,7 +28,7 @@ public class PlayerBouncePad : MonoBehaviour, IBouncePad
         yield return new WaitForSeconds(secondsConsumingBullets);
         if(bullet != null) 
         {
-            AudioManager.Instance.PlayRandomEffectAudio("spit1", "spit2", "spit3", "spit4", "spit5", "spit6");
+            AudioManager.Instance.PlayRandomEffectAudio("rabbitspit1", "rabbitspit2");
             bullet.gameObject.SetActive(true);
             bullet.transform.position = transform.position;
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

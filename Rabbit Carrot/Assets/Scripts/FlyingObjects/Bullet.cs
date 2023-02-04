@@ -115,6 +115,9 @@ public class Bullet : FlyingObject
     }
     private void DestroySelf()
     {
-        GameController.Instance.FlyingObjectsController.RemoveFlying<Bullet>(gameObject);
+        if(GameController.Instance.IsPlaying)
+            GameController.Instance.FlyingObjectsController.RemoveFlying<Bullet>(gameObject);
+        else
+            Destroy(gameObject);
     }
 }

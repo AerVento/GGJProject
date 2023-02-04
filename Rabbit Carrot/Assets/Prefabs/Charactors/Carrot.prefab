@@ -179,7 +179,7 @@ MonoBehaviour:
   reloadTime: 2
   lockTime: 2
   bulletSpeed: 2
-  guardAngle: 45
+  guardAngle: 20
 --- !u!1 &4160115608814356739
 GameObject:
   m_ObjectHideFlags: 0

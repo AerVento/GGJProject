@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Main : MonoSingleton<Main>
 {
@@ -12,11 +13,15 @@ public class Main : MonoSingleton<Main>
     void Start()
     {
         cursor = new CursorController(normalCursor,targetingCursor);
+
+        AudioManager.Instance.MusicVolume = 1;
+        AudioManager.Instance.EffectVolume = 1;
+
         UIManager.Instance.ShowPanel<TitlePanel>("TitlePanel");
     }
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 }

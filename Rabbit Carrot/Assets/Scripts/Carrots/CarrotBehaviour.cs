@@ -196,6 +196,8 @@ public class CarrotBehaviour : MonoBehaviour
             Vector3 random = new Vector3(0, Random.Range(minUpChange,maxUpChange));
             bullet.transform.right = target + random - body.transform.position;
             bullet.Speed = BulletSpeed;
+
+            AudioManager.Instance.PlayRandomEffectAudio("spit1", "spit2", "spit3", "spit4");
         });
     }
 }

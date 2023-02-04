@@ -28,10 +28,10 @@ public class CursorController
             switch (value)
             {
                 case Status.None:
-                    Cursor.SetCursor(normal, Vector2.zero, CursorMode.Auto);
+                    Cursor.SetCursor(normal, Vector2.zero, CursorMode.ForceSoftware);
                     break;
                 case Status.Targeting:
-                    Cursor.SetCursor(targeting, Vector2.zero, CursorMode.Auto);
+                    Cursor.SetCursor(targeting, targeting.texelSize / 2, CursorMode.ForceSoftware);
                     break;
             }
             status = value;
