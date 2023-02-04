@@ -277,8 +277,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b236cfd8b17c15b4d967057ae61ed0ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalCursor: {fileID: 2800000, guid: 2a18dbb309541e04d8d6185c41b280cc, type: 3}
-  targetingCursor: {fileID: 2800000, guid: 42b0a86a67e5e094abb631b1f59a2e4e, type: 3}
+  normalCursor: {fileID: 2800000, guid: be5fc0e220a8eae48895f7b56c00844a, type: 3}
+  targetingCursor: {fileID: 2800000, guid: f9172d75204118741b8463a63db9233b, type: 3}
 --- !u!1001 &6164728479110275907
 PrefabInstance:
   m_ObjectHideFlags: 0

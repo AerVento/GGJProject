@@ -178,7 +178,7 @@ MonoBehaviour:
   growSpeed: 1
   reloadTime: 2
   lockTime: 2
-  bulletSpeed: 2
+  bulletSpeed: 1.5
   guardAngle: 20
 --- !u!1 &4160115608814356739
 GameObject:

@@ -22,6 +22,8 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField]
     [Header("玩家角色")]
     private GameObject playerBody;
+    
+    public GameObject playerBody2;
 
     private GameObject moleInstance;
     private InputCalculator calculator;
@@ -40,6 +42,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         root.RootLength -= deltaDistance; //向上移动意味着根要缩短
         playerBody.transform.position += Vector3.up * deltaDistance;
+        playerBody2.transform.position += Vector3.up * deltaDistance;
     }
     public void MoveMole(float offset)
     {
@@ -64,7 +67,7 @@ public class PlayerBehaviour : MonoBehaviour
                     break;
                 case E_PlayerOperation.ClimbDown:
                     //兔子角色向下移动,并且y轴不低于-8f
-                    if (playerBody.transform.position.y > worldAreaRect.yMin)
+                    if (playerBody.transform.position.y > worldAreaRect.yMin+2)
                     {
                         Climb(-rabbitSpeed * Time.deltaTime);
                     }
@@ -78,7 +81,7 @@ public class PlayerBehaviour : MonoBehaviour
                     break;
                 case E_PlayerOperation.ClimbDownQuick:
                     //兔子角色向下移动,并且y轴不低于-8f
-                    if (playerBody.transform.position.y > worldAreaRect.yMin)
+                    if (playerBody.transform.position.y > worldAreaRect.yMin+2)
                     {
                         Climb(-rabbitSpeed * extraSpeedPercent * Time.deltaTime);
                     }
