@@ -898,8 +898,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.049642213, y: 0.87}
-  m_Size: {x: 2.4709036, y: 1.0000155}
+  m_Offset: {x: -0.0051630805, y: 0.59607697}
+  m_Size: {x: 1.5940746, y: 0.67000026}
   m_Direction: 1
 --- !u!114 &-9133579800494163062
 MonoBehaviour:
@@ -923,6 +923,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7861330642453032442}
   - component: {fileID: 7861330642453032445}
+  - component: {fileID: 2012916503704346577}
   m_Layer: 0
   m_Name: Mole_Body
   m_TagString: Untagged
@@ -939,7 +940,7 @@ Transform:
   m_GameObject: {fileID: 7861330642453032443}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7861330642453032440}
@@ -986,9 +987,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
-  m_Color: {r: 0.98745084, g: 1, b: 0.5518868, a: 1}
-  m_FlipX: 0
+  m_Sprite: {fileID: 21300000, guid: 61169c254e1996d4993a3b212fd17277, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 2}
@@ -997,6 +998,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &2012916503704346577
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7861330642453032443}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 427f44e4478c2b4458e3cc14f4ce4508, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7861330642453032444
 GameObject:
   m_ObjectHideFlags: 0
@@ -1071,7 +1092,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -2
   m_Sprite: {fileID: 3625043607559282579, guid: 19fb86013d8c24d6cb8410c0aadf30fa, type: 3}
-  m_Color: {r: 1, g: 0.84931326, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.84931326, b: 0, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
