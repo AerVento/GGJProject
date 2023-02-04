@@ -27,7 +27,10 @@ public class AudioSO : ScriptableObject,IEnumerable<AudioSO.Audio>
 
     public AudioClip GetRandomAudio()
     {
-        return audioList[Random.Range(0, audioList.Count)].Clip;
+        if(audioList.Count > 0)
+            return audioList[Random.Range(0, audioList.Count)].Clip;
+        else 
+            return null;
     }
     public IEnumerator<Audio> GetEnumerator()
     {

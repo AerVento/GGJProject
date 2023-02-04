@@ -83,3 +83,63 @@ public class RandomCarrotsRefresher : CarrotsRefresher
             MonoManager.Instance.StopCoroutine(refreshCoroutine);
     }
 }
+
+public class TestCarrotsRefresher : CarrotsRefresher
+{
+    private int generateCount;
+    private TilemapData.BlockData[] blocks;
+    private TilemapData.BlockData[] Blocks
+    {
+        get
+        {
+            if (blocks == null)
+            {
+                //筛选可以生成的位置
+                var array = GameController.Instance.MapController.SolidBlocks;
+                var data = array.Where<TilemapData.BlockData>((block) =>
+                {
+                    Vector3 worldPos = GameController.Instance.MapController.TransformGridPosToWorldPos(block.Position);
+                    bool isInViewRect = GameController.Instance.MapController.MapWorldRect.Contains(worldPos);
+                    //下方一格是否已经有方块了
+                    bool isOccupied = array.Contains(new TilemapData.BlockData(block.Position + new Vector3Int(0, -1), block.BlockId));
+                    return isInViewRect && !isOccupied;
+                });
+                List<TilemapData.BlockData> list = new List<TilemapData.BlockData>();
+                foreach (var block in data)
+                {
+                    list.Add(block);
+                }
+                blocks = list.ToArray();
+            }
+            return blocks;
+        }
+    }
+    public TestCarrotsRefresher(int generateTotalCount)
+    {
+        this.generateCount= generateTotalCount;
+    }
+    private void Generate()
+    {
+        float minRootLength = 1;
+        float maxRootLength = 3;
+        for(int i = 0; i < generateCount; i++)
+        {
+            int index = Random.Range(0, Blocks.Length);
+            Vector3 worldPos = GameController.Instance.MapController.TransformGridPosToWorldPos(Blocks[index].Position);
+            worldPos += Vector3.right * GameController.Instance.MapController.Grid.cellSize.x / 2;
+
+            CarrotBehaviour carrot = GameController.Instance.CarrotsController.AddCarrot(worldPos);
+            carrot.Angle = 270;
+            carrot.GrowAndStart(Random.Range(minRootLength, maxRootLength));
+        }
+    }
+    protected override void RealStartRefresh()
+    {
+        Generate();
+    }
+
+    protected override void RealStopRefresh()
+    {
+        
+    }
+}

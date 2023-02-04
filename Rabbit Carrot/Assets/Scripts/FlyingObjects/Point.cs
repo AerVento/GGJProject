@@ -20,6 +20,7 @@ public class Point : FlyingObject
         if (mole != null)
         {
             GameController.Instance.PlayerController.AddScore(pointValue);
+            AudioManager.Instance.PlayEffectAudio("point");
             DestroySelf();
         }
     }

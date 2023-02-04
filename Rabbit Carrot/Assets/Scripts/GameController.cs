@@ -75,9 +75,10 @@ public class GameController : MonoSingleton<GameController>
         flyingObjectsController = new FlyingObjectsController();
         mapController = new MapController();
         mapController.Load("Assets/XmlTileMapData/TestMap.xml");
-        refresher = new RandomCarrotsRefresher();
+        refresher = new TestCarrotsRefresher(10);
         refresher.StartRefreshing();
 
+        UIManager.Instance.ShowPanel<InGamePanel>("InGamePanel");
         //InitializeCamera();
     }
 
@@ -90,6 +91,11 @@ public class GameController : MonoSingleton<GameController>
         Destroy(mapController.Grid.gameObject);
         refresher.StopRefreshing();
 
-        UIManager.Instance.ShowPanel<ResultPanel>("ResultPanel",UIManager.UILayer.Mid,(panel) => panel.Label = result?"Victory":"Defeat");
+        UIManager.Instance.HidePanel("InGamePanel");
+
+        AudioManager.Instance.StopAllEffectAudio();
+        AudioManager.Instance.PlayEffectAudio(result == true ? "win" : "lose");
+        UIManager.Instance.ShowPanel<ResultPanel>("ResultPanel",UIManager.UILayer.Mid,(panel) => panel.SetResult(result));
+
     }
 }

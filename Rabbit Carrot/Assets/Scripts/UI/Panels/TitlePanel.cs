@@ -12,10 +12,14 @@ public class TitlePanel : BasePanel
     }
     protected override void BeforeShow()
     {
+        AudioManager.Instance.PlayBackgroundMusic("Menu");
+
         GetControl<Button>("StartBtn").onClick.AddListener(StartGameBtn);
     }
     protected override void BeforeHide()
     {
+        AudioManager.Instance.StopBackgroundAudio();
+
         GetControl<Button>("StartBtn").onClick.RemoveListener(StartGameBtn);
     }
     private void StartGameBtn()

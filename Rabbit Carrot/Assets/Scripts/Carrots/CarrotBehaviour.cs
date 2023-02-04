@@ -30,22 +30,39 @@ public class CarrotBehaviour : MonoBehaviour
     /// The root of the carrot.
     /// </summary>
     public Root Root => root;
+    
+    [SerializeField]
+    private float growSpeed = 1;
     /// <summary>
     /// The grow speed.
     /// </summary>
-    public float GrowSpeed { get; set; } = 1;
+    public float GrowSpeed { get => growSpeed; set => growSpeed = value; }
+
+    [SerializeField]
+    private float reloadTime = 2;
     /// <summary>
     /// The reload time for carrots to shoot next bullet.
     /// </summary>
-    public float ReloadTime { get; set; } = 2;
+    public float ReloadTime { get => reloadTime; set => reloadTime = value; }
+
+    [SerializeField]
+    private float lockTime = 2;
     /// <summary>
     /// The time distance when the carrots found player but wait for shots.
     /// </summary>
-    public float LockTime { get; set; } = 2;
+    public float LockTime { get => lockTime; set => lockTime = value; }
+
+    [SerializeField]
+    private float bulletSpeed = 2;
     /// <summary>
     /// The flying speed of bullet.
     /// </summary>
-    public float BulletSpeed { get; set; } = 2f;
+    public float BulletSpeed { get => bulletSpeed; set => bulletSpeed = value; }
+
+    [SerializeField]
+    [Range(0, 90)]
+    private float guardAngle;
+    public float GuardAngle { get => guardAngle; set => guardAngle = value; }
     /// <summary>
     /// The rotate angle of root.
     /// </summary>
@@ -159,9 +176,12 @@ public class CarrotBehaviour : MonoBehaviour
     /// <returns></returns>
     private bool ShouldShoot()
     {
-        //When player is under the carrot;
-        if (GameController.Instance.PlayerController.Player.PlayerPosition.y < transform.position.y)
-        {
+        Vector3 playerPosition = GameController.Instance.PlayerController.Player.PlayerPosition;
+        Vector3 bodyPosition = body.transform.position;
+        float distance = Mathf.Abs(playerPosition.x - bodyPosition.x);
+        float allowDeltaY = distance * Mathf.Tan(Mathf.Deg2Rad * GuardAngle);
+        if (Mathf.Abs(playerPosition.y - bodyPosition.y) <= allowDeltaY) 
+        { 
             return true;
         }
         else

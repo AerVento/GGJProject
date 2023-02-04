@@ -6,14 +6,10 @@ using UnityEngine.UI;
 
 public class ResultPanel : BasePanel
 {
-    public string Label
-    {
-        get => GetControl<TextMeshProUGUI>("ResultTitle").text;
-        set
-        {
-            GetControl<TextMeshProUGUI>("ResultTitle").text = value;
-        }
-    }
+    [SerializeField]
+    private Sprite winLabelSprite;
+    [SerializeField]
+    private Sprite loseLabelSprite;
     protected override void BeforeShow()
     {
         GetControl<Button>("BackToTitleBtn").onClick.AddListener(BackToTitle);
@@ -26,5 +22,9 @@ public class ResultPanel : BasePanel
     {
         Hide();
         UIManager.Instance.ShowPanel<TitlePanel>("TitlePanel");
+    }
+    public void SetResult(bool result)
+    {
+        GetControl<Image>("ResultImg").sprite = result == true? winLabelSprite : loseLabelSprite;
     }
 }

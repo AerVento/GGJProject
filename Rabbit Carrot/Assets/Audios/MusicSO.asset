@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioList:
   - Clip: {fileID: 8300000, guid: b5a6594ac58aa5c43a0680794bea572b, type: 3}
-    Name: 
+    Name: InGame
+  - Clip: {fileID: 8300000, guid: 7cb77c626c7cb2441ade0257fd949fa0, type: 3}
+    Name: Menu

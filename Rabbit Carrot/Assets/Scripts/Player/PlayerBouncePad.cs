@@ -8,13 +8,17 @@ public class PlayerBouncePad : MonoBehaviour, IBouncePad
     [SerializeField]
     private float secondsConsumingBullets;
 
+    private Queue<Coroutine> coroutines = new Queue<Coroutine>();
+
     public E_Team SourceTeam => E_Team.Carrots;
 
     public E_Team TargetTeam => E_Team.Player;
 
     public void Bounce(Bullet bullet)
     {
-        StartCoroutine(GagBullet(bullet));
+        AudioManager.Instance.PlayRandomEffectAudio("eat1", "eat2", "eat3");
+        coroutines.Enqueue(StartCoroutine(GagBullet(bullet)));
+        Main.Instance.Cursor.CursorStatus = CursorController.Status.Targeting;
     }
     private IEnumerator GagBullet(Bullet bullet)
     {
@@ -24,11 +28,18 @@ public class PlayerBouncePad : MonoBehaviour, IBouncePad
         yield return new WaitForSeconds(secondsConsumingBullets);
         if(bullet != null) 
         {
+            AudioManager.Instance.PlayRandomEffectAudio("spit1", "spit2", "spit3", "spit4", "spit5", "spit6");
             bullet.gameObject.SetActive(true);
             bullet.transform.position = transform.position;
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             bullet.transform.right = new Vector3(worldPos.x, worldPos.y) - GameController.Instance.PlayerController.Player.PlayerPosition;
             bullet.Speed = originalSpeed;
+        }
+        //最先进去的必然最先出来
+        coroutines.Dequeue();
+        if(coroutines.Count == 0)
+        {
+            Main.Instance.Cursor.CursorStatus = CursorController.Status.None;
         }
     }
 }

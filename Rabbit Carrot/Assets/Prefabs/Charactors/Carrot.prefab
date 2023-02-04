@@ -175,6 +175,11 @@ MonoBehaviour:
   root: {fileID: 8409351915729308305}
   minUpChange: 0.5
   maxUpChange: 1.5
+  growSpeed: 1
+  reloadTime: 2
+  lockTime: 2
+  bulletSpeed: 2
+  guardAngle: 45
 --- !u!1 &4160115608814356739
 GameObject:
   m_ObjectHideFlags: 0

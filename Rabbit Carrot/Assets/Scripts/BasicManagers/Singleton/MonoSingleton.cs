@@ -13,7 +13,7 @@ public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         get => instance;
     }
-    void Awake()
+    protected virtual void Awake()
     {
         instance = this as T;
     }

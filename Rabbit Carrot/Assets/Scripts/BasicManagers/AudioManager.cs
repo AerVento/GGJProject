@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine.Events;
+using static Unity.VisualScripting.Member;
 
 /// <summary>
 /// Manager of audios in game.
@@ -95,8 +96,9 @@ public class AudioManager : MonoSingleton<AudioManager>
     /// <summary>
     /// Initialize when activated.
     /// </summary>
-    public void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         GameObject obj = new GameObject("AudioSource");
 
         GameObject musicSource = new GameObject("MusicSource");
@@ -124,9 +126,12 @@ public class AudioManager : MonoSingleton<AudioManager>
     public AudioClip PlayRandomBackgroundMusic()
     {
         AudioClip audio = musicDatabase.GetRandomAudio();
-        musicSource.clip = audio;
-        musicSource.volume = musicVolume;
-        musicSource.Play();
+        if(audio != null)
+        {
+            musicSource.clip = audio;
+            musicSource.volume = musicVolume;
+            musicSource.Play();
+        }
         return audio;
     }
     /// <summary>
@@ -137,9 +142,12 @@ public class AudioManager : MonoSingleton<AudioManager>
     public AudioClip PlayBackgroundMusic(string musicName)
     {
         AudioClip audio = musicDatabase.GetAudio(musicName);
-        musicSource.clip = audio;
-        musicSource.volume = musicVolume;
-        musicSource.Play();
+        if(audio != null)
+        {
+            musicSource.clip = audio;
+            musicSource.volume = musicVolume;
+            musicSource.Play();
+        }
         return audio;
     }
     /// <summary>
@@ -149,9 +157,12 @@ public class AudioManager : MonoSingleton<AudioManager>
     /// <returns>The audio clip.</returns>
     public AudioClip PlayBackgroundMusic(AudioClip audioClip)
     {
-        musicSource.clip = audioClip;
-        musicSource.volume = musicVolume;
-        musicSource.Play();
+        if(audioClip != null)
+        {
+            musicSource.clip = audioClip;
+            musicSource.volume = musicVolume;
+            musicSource.Play();
+        }
         return audioClip;
     }
     /// <summary>
@@ -222,15 +233,22 @@ public class AudioManager : MonoSingleton<AudioManager>
             effectSourceList.Remove(source);
             effectSourceBuffer.Put(effectSourcePrefab, source.gameObject);
         }
+        if (name.Length == 0)
+            return null;
+        
         System.Random r = new System.Random();
         int index = r.Next(0, names.Length);
 
         AudioSource source = effectSourceBuffer.Get(effectSourcePrefab).GetComponent<AudioSource>();
-        source.clip = effectDatabase.GetAudio(names[index]);
-        source.Play();
-        source.volume = effectVolume;
-        effectSourceList.Add(source);
-        MonoManager.Instance.StartCoroutine(CollectCouroutine(source, source.clip.length));
+        if(source != null)
+        {
+            source.clip = effectDatabase.GetAudio(names[index]);
+            source.Play();
+            source.volume = effectVolume;
+            effectSourceList.Add(source);
+            MonoManager.Instance.StartCoroutine(CollectCouroutine(source, source.clip.length));
+        }
+
         return source;
     }
     /// <summary>
@@ -246,6 +264,19 @@ public class AudioManager : MonoSingleton<AudioManager>
             effectSourceBuffer.Put(effectSourcePrefab,source.gameObject);
         }
     }
-
+    public void StopAllEffectAudio()
+    {
+        foreach(var audiosource in effectSourceList)
+        {
+            audiosource.Stop();
+            effectSourceBuffer.Put(effectSourcePrefab, audiosource.gameObject);
+        }
+        effectSourceList.Clear();
+    }
     #endregion
+
+    private void Start()
+    {
+        MusicSource.loop = true;
+    }
 }

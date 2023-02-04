@@ -12,4 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f5dce407c166064e92978899856449d, type: 3}
   m_Name: EffectSO
   m_EditorClassIdentifier: 
-  audioList: []
+  audioList:
+  - Clip: {fileID: 8300000, guid: 3b39d6eadf95f6c44bdc62bc9edbc3ab, type: 3}
+    Name: eat1
+  - Clip: {fileID: 8300000, guid: 9506644556a5e8c43979e8794440e68e, type: 3}
+    Name: eat2
+  - Clip: {fileID: 8300000, guid: c3c2813f9c8cd7f48ba2ba74d3e678a2, type: 3}
+    Name: eat3
+  - Clip: {fileID: 8300000, guid: 8704ee2d0809ff34fa89a4917a03f782, type: 3}
+    Name: spit1
+  - Clip: {fileID: 8300000, guid: b08293ab599538f459a56c7d95c4feb8, type: 3}
+    Name: spit2
+  - Clip: {fileID: 8300000, guid: 2b85d5425b1fe3c42a8b466f7ce91834, type: 3}
+    Name: spit3
+  - Clip: {fileID: 8300000, guid: f700616baf84d9a41be53fdd48d148e9, type: 3}
+    Name: spit4
+  - Clip: {fileID: 8300000, guid: 0c48b9af61d3f2b468467dc2b8225b26, type: 3}
+    Name: spit5
+  - Clip: {fileID: 8300000, guid: fb5a5410004106e4abc25d3c8b78ea45, type: 3}
+    Name: spit6
+  - Clip: {fileID: 8300000, guid: fb1134678469186468075e48b8ae6333, type: 3}
+    Name: point
+  - Clip: {fileID: 8300000, guid: 8260c58b7f85c1140b14734e023c8441, type: 3}
+    Name: win
+  - Clip: {fileID: 8300000, guid: 6456ff629a0bef34c9b0c15c3f6a2dbd, type: 3}
+    Name: lose
