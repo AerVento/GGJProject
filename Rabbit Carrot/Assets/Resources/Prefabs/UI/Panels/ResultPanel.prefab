@@ -213,8 +213,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 902acaac4f78240419df8a0939f0cd6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  winLabelSprite: {fileID: 21300000, guid: 6f223bdbb95a5b945bf48384bf2eada1, type: 3}
-  loseLabelSprite: {fileID: 21300000, guid: 64c7c7100732c6242a35c566d48466a5, type: 3}
+  winLabelSprite: {fileID: 21300000, guid: 1e3728b26d0d16d43b121688cad7cb40, type: 3}
+  loseLabelSprite: {fileID: 21300000, guid: e897767188e11ae4aa37e33b0c4fcfcc, type: 3}
 --- !u!1 &3627492967996085964
 GameObject:
   m_ObjectHideFlags: 0
