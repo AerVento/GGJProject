@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Timeline;
 
@@ -25,7 +26,7 @@ public class PlayerBehaviour : MonoBehaviour
     
     public GameObject playerBody2;
 
-    private GameObject moleInstance;
+    private Mole moleInstance;
     private InputCalculator calculator;
 
     /// <summary>
@@ -53,6 +54,19 @@ public class PlayerBehaviour : MonoBehaviour
     {
 
         Rect worldAreaRect = GameController.Instance.MapController.MapWorldRect;
+
+        if(operations.Length == 0)
+        {
+            moleInstance.SetDirection(0);
+        }
+        else if (operations.Contains(E_PlayerOperation.MoleMoveLeft))
+        {
+            moleInstance.SetDirection(-1);
+        }
+        else if (operations.Contains(E_PlayerOperation.MoleMoveRight))
+        {
+            moleInstance.SetDirection(1);
+        }
 
         foreach (E_PlayerOperation operation in operations)
         {
@@ -111,7 +125,7 @@ public class PlayerBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        moleInstance = Instantiate(molePrefab);
+        moleInstance = Instantiate(molePrefab).GetComponent<Mole>();
 
         calculator = new InputCalculator();
 
