@@ -6,7 +6,7 @@ using UnityEngine;
 /// SO database of all block tiles.
 /// </summary>
 [CreateAssetMenu(fileName = "BlockTileSO", menuName = "SO/BlockTileData")]
-[SOFilePath(Path = "Assets/Tile Palette/BlockTileSO.asset")]
+[SOFilePath(Path = "Tile Palette/BlockTileSO")]
 public class BlockTileSO : SOSingleton<BlockTileSO>
 {
     public List<BlockTile> Tiles = new List<BlockTile>();

@@ -10,7 +10,7 @@ using UnityEngine;
 /// <typeparam name="T">The scriptable object class needed to be singleton mode.</typeparam>
 public abstract class SOSingleton<T> : ScriptableObject where T : ScriptableObject
 {
-    private static string DEFAULT_PATH =>"Assets/Resources/SO/" + typeof(T).Name;
+    private static string DEFAULT_PATH =>"SO/" + typeof(T).Name;
     private static T instance;
     public static T Instance
     {
@@ -27,7 +27,7 @@ public abstract class SOSingleton<T> : ScriptableObject where T : ScriptableObje
                 }
                 else
                     path = DEFAULT_PATH;
-                instance = AssetDatabase.LoadAssetAtPath<T>(path);
+                instance = ResourceManager.Instance.Load<T>(path);
                 
                 if (instance == null)
                 {
