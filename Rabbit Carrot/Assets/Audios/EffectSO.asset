@@ -20,17 +20,17 @@ MonoBehaviour:
   - Clip: {fileID: 8300000, guid: c3c2813f9c8cd7f48ba2ba74d3e678a2, type: 3}
     Name: eat3
   - Clip: {fileID: 8300000, guid: 8704ee2d0809ff34fa89a4917a03f782, type: 3}
-    Name: spit1
-  - Clip: {fileID: 8300000, guid: b08293ab599538f459a56c7d95c4feb8, type: 3}
-    Name: spit2
-  - Clip: {fileID: 8300000, guid: 2b85d5425b1fe3c42a8b466f7ce91834, type: 3}
-    Name: spit3
+    Name: rabbitspit1
   - Clip: {fileID: 8300000, guid: f700616baf84d9a41be53fdd48d148e9, type: 3}
-    Name: spit4
+    Name: rabbitspit2
+  - Clip: {fileID: 8300000, guid: b08293ab599538f459a56c7d95c4feb8, type: 3}
+    Name: spit1
+  - Clip: {fileID: 8300000, guid: 2b85d5425b1fe3c42a8b466f7ce91834, type: 3}
+    Name: spit2
   - Clip: {fileID: 8300000, guid: 0c48b9af61d3f2b468467dc2b8225b26, type: 3}
-    Name: spit5
+    Name: spit3
   - Clip: {fileID: 8300000, guid: fb5a5410004106e4abc25d3c8b78ea45, type: 3}
-    Name: spit6
+    Name: spit4
   - Clip: {fileID: 8300000, guid: fb1134678469186468075e48b8ae6333, type: 3}
     Name: point
   - Clip: {fileID: 8300000, guid: 8260c58b7f85c1140b14734e023c8441, type: 3}

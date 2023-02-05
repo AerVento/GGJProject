@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using System.Linq;
 
 /// <summary>
 /// Manager of all UI panels.
@@ -44,23 +45,30 @@ public class UIManager:Singleton<UIManager>
     /// <summary>
     /// The main canvas of UI.
     /// </summary>
-    public Canvas Canvas { get; private set; }
-
+    public Canvas MainCanvas { get; private set; }
+    public Canvas BackgroundCanvas { get; private set; }
     /// <summary>
     /// Initialization of UI manager.
     /// </summary>
     public UIManager()
     {
         GameObject obj = null;
-        obj = ResourceManager.Instance.Load<GameObject>(UI_PATH + "Canvas");
+        
+        obj = ResourceManager.Instance.Load<GameObject>(UI_PATH + "MainCanvas");
         GameObject canvas = GameObject.Instantiate(obj);
-        Canvas = canvas.GetComponent<Canvas>();
+        MainCanvas = canvas.GetComponent<Canvas>();
         GameObject.DontDestroyOnLoad(canvas);
 
-        top = canvas.transform.Find("Top");
-        mid = canvas.transform.Find("Mid");
-        bot = canvas.transform.Find("Bot");
-        system = canvas.transform.Find("System");
+        obj = ResourceManager.Instance.Load<GameObject>(UI_PATH + "BackgroundCanvas");
+        canvas = GameObject.Instantiate(obj);
+        BackgroundCanvas = canvas.GetComponent<Canvas>();
+        BackgroundCanvas.worldCamera = Camera.allCameras.Where(camera => camera.name == "Background Camera").FirstOrDefault();
+        GameObject.DontDestroyOnLoad(canvas);
+
+        top = MainCanvas.transform.Find("Top");
+        mid = MainCanvas.transform.Find("Mid");
+        bot = MainCanvas.transform.Find("Bot");
+        system = MainCanvas.transform.Find("System");
 
         obj = ResourceManager.Instance.Load<GameObject>(UI_PATH + "EventSystem");
         GameObject eventSystem = GameObject.Instantiate(obj);

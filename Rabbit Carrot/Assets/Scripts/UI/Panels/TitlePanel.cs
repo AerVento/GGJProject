@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class TitlePanel : BasePanel
 {
+    public TitleImage titleImage;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,9 +25,9 @@ public class TitlePanel : BasePanel
     }
     private void StartGameBtn()
     {
-        Hide();
-        GameController.Instance.GameStart();
+        titleImage.Disappear();
     }
+
     // Update is called once per frame
     void Update()
     {
