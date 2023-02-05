@@ -27,17 +27,16 @@ public class PlayerBehaviour : MonoBehaviour
     public GameObject playerBody2;
 
     private Mole moleInstance;
+    public Mole Mole
+    {
+        get => moleInstance;
+    }
     private InputCalculator calculator;
 
     /// <summary>
     /// The world position of player body.
     /// </summary>
     public Vector3 PlayerPosition { get => playerBody.transform.position; }
-
-    public Mole Mole
-    {
-        get => moleInstance.GetComponent<Mole>();
-    }
 
     public void Climb(float deltaDistance)
     {
@@ -120,13 +119,14 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
-
+    private void Awake()
+    {
+        moleInstance = Instantiate(molePrefab).GetComponent<Mole>();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        moleInstance = Instantiate(molePrefab).GetComponent<Mole>();
-
         calculator = new InputCalculator();
 
         calculator.ClimbUpKey = (MouseSource)1;
