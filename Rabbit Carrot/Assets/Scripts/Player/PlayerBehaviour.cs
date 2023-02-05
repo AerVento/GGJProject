@@ -137,6 +137,7 @@ public class PlayerBehaviour : MonoBehaviour
         calculator.MoveRightKey = (KeyCodeSource)KeyCode.RightArrow;
         calculator.StartListening();
 
+        Climb(4f);
     }
 
     // Update is called once per frame
