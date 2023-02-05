@@ -251,7 +251,6 @@ GameObject:
   - component: {fileID: 2978742510175223399}
   - component: {fileID: 5154154680177259386}
   - component: {fileID: 3485472712515848413}
-  - component: {fileID: 7622531196682010588}
   m_Layer: 0
   m_Name: Middleground
   m_TagString: Terrain
@@ -385,22 +384,6 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
---- !u!19719996 &7622531196682010588
-TilemapCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2621625606136412958}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_MaximumTileChangeCount: 1000
-  m_ExtrusionFactor: 0.00001
 --- !u!1 &5628880601618395585
 GameObject:
   m_ObjectHideFlags: 0
