@@ -12,12 +12,12 @@ using UnityEngine;
 /// </summary>
 public class XmlMapHandler : IMapHandler
 {
-    public MapData Load(string filePath)
+    public MapData Load(string XmlString)
     {
         MapData data = new MapData();
 
         XmlDocument doc = new XmlDocument();
-        doc.Load(filePath);
+        doc.LoadXml(XmlString);
         XmlNode root = doc.SelectSingleNode("map");
 
         XmlNode rectNode = root.SelectSingleNode("rect");

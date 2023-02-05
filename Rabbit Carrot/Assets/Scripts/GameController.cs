@@ -1,10 +1,13 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class GameController : MonoSingleton<GameController>
 {
+    [SerializeField]
+    private TextAsset mapData;
     [SerializeField]
     private GameObject playerPrefab;
     [SerializeField]
@@ -78,11 +81,13 @@ public class GameController : MonoSingleton<GameController>
         carrotsController = new CarrotsController(carrotPrefab);
         flyingObjectsController = new FlyingObjectsController();
         mapController = new MapController();
-        mapController.Load("Assets/XmlTileMapData/TestMap.xml");
+
+        mapController.Load(mapData);
+
         refresher = new RandomCarrotsRefresher(5);
 
         Main.Instance.Cursor.CursorStatus = CursorController.Status.None;
-
+        
         UIManager.Instance.ShowPanel<InGamePanel>("InGamePanel");
         //InitializeCamera();
     }

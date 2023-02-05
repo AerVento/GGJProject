@@ -5,6 +5,8 @@ using UnityEngine.EventSystems;
 
 public class Main : MonoSingleton<Main>
 {
+
+
     public Texture2D normalCursor;
     public Texture2D targetingCursor;
 

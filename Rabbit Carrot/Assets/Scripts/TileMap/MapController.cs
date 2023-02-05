@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -120,10 +121,8 @@ public class MapController
             }
         }
     }
-    public void Load(string mapFilePath)
+    private void ShowMap()
     {
-        XmlMapHandler handler = new XmlMapHandler();
-        data = handler.Load(mapFilePath);
         foreach (var pair in data)//不能直接覆盖，因为在下面修改时还会在调用一遍修改函数
         {
             Tilemap map;
@@ -145,6 +144,18 @@ public class MapController
                 map.SetTile(block.Position, BlockTileSO.Instance.GetTile(block.BlockId));
             }
         }
+    }
+    public void Load(TextAsset asset)
+    {
+        XmlMapHandler handler = new XmlMapHandler();
+        data = handler.Load(asset.text);
+        ShowMap();
+    }
+    public void Load(string mapFilePath)
+    {
+        XmlMapHandler handler = new XmlMapHandler();
+        data = handler.Load(File.ReadAllText(mapFilePath));
+        ShowMap();
     }
     public Vector3 TransformGridPosToWorldPos(Vector3Int gridPos)
     {

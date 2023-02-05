@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b831c84b83ca449bcb39e74dd803f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapData: {fileID: 4900000, guid: 0d0f56161f02a2741990ad6775857510, type: 3}
   playerPrefab: {fileID: 1160211120492223783, guid: 1014a5276c966b84caa58723ef3937a6, type: 3}
   carrotPrefab: {fileID: 4160115608520366198, guid: 1d20e9d550c905b4e84905f055202f61, type: 3}
   scoreToWin: 5
