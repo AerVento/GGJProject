@@ -104,6 +104,7 @@ public class PlayerRoot : Root
     public override void DestroyRoot()
     {
         gameObject.SetActive(false);
-        GameController.Instance.GameEnd(false);
+        if(GameController.Instance.IsPlaying)
+            GameController.Instance.GameEnd(false);
     }
 }

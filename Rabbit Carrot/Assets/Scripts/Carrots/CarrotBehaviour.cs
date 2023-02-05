@@ -1,16 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
 
 public class CarrotBehaviour : MonoBehaviour
 {
     [Header("胡萝卜身体")]
     [SerializeField]
-    private GameObject body;
+    private CarrotsBody body;
     [Header("根")]
     [SerializeField]
-    private Root root;
+    private CarrotRoot root;
+
+    [Header("警告标识")]
+    [SerializeField]
+    private SpriteRenderer lockingSign;
 
     [Header("在攻击时子弹目标位置向上偏移的最小值")]
     [SerializeField]
@@ -18,6 +23,11 @@ public class CarrotBehaviour : MonoBehaviour
     [Header("在攻击时子弹目标位置向上偏移的最大值")]
     [SerializeField]
     private float maxUpChange;
+
+    /// <summary>
+    /// Event to call on being destroyed.
+    /// </summary>
+    public event UnityAction<CarrotBehaviour> OnCarrotDestroy;
 
     /// <summary>
     /// The status carrot at.
@@ -81,6 +91,16 @@ public class CarrotBehaviour : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        root.OnRootDestroyed += Die;
+    }
+
+    private void Start()
+    {
+        lockingSign.gameObject.SetActive(false);
+    }
+
     bool isLocking = false; //whether the carrot was locking on player.
     private void Update()
     {
@@ -106,6 +126,15 @@ public class CarrotBehaviour : MonoBehaviour
                 yield return 1;
             }
         }
+        if(status == E_CarrotStatus.Lock || status == E_CarrotStatus.Shoot || status == E_CarrotStatus.Reload)
+        {
+            lockingSign.gameObject.SetActive(true);
+        }
+        else
+        {
+            lockingSign.gameObject.SetActive(false);
+        }
+
         switch (status)
         {
             case E_CarrotStatus.Guard:
@@ -189,15 +218,24 @@ public class CarrotBehaviour : MonoBehaviour
     }
     private void Shoot()
     {
-        GameController.Instance.FlyingObjectsController.AddFlying<Bullet>(body.transform.position, (bullet) =>
+        body.Shoot(() =>
         {
-            bullet.Team = E_Team.Carrots;
-            Vector3 target = GameController.Instance.PlayerController.Player.PlayerPosition;
-            Vector3 random = new Vector3(0, Random.Range(minUpChange,maxUpChange));
-            bullet.transform.right = target + random - body.transform.position;
-            bullet.Speed = BulletSpeed;
+            GameController.Instance.FlyingObjectsController.AddFlying<Bullet>(body.transform.position, (bullet) =>
+            {
+                bullet.Team = E_Team.Carrots;
+                Vector3 target = GameController.Instance.PlayerController.Player.PlayerPosition;
+                Vector3 random = new Vector3(0, Random.Range(minUpChange, maxUpChange));
+                bullet.transform.right = target + random - body.transform.position;
+                bullet.Speed = BulletSpeed;
 
-            AudioManager.Instance.PlayRandomEffectAudio("spit1", "spit2", "spit3", "spit4");
+                AudioManager.Instance.PlayRandomEffectAudio("spit1", "spit2", "spit3", "spit4");
+            });
         });
+    }
+    private void Die()
+    {
+        OnCarrotDestroy?.Invoke(this);
+        GameController.Instance.FlyingObjectsController.AddFlying<Point>(transform.position);
+        GameController.Instance.CarrotsController.RemoveCarrot(this);
     }
 }

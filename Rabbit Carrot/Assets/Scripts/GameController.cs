@@ -46,6 +46,10 @@ public class GameController : MonoSingleton<GameController>
             GameEnd(true);
         }
     }
+
+    public void StartGenerateCarrots() => refresher.StartRefreshing();
+
+
     public void GameStart()
     {
         void InitializeCamera()
@@ -75,8 +79,9 @@ public class GameController : MonoSingleton<GameController>
         flyingObjectsController = new FlyingObjectsController();
         mapController = new MapController();
         mapController.Load("Assets/XmlTileMapData/TestMap.xml");
-        refresher = new TestCarrotsRefresher(10);
-        refresher.StartRefreshing();
+        refresher = new RandomCarrotsRefresher(5);
+
+        Main.Instance.Cursor.CursorStatus = CursorController.Status.None;
 
         UIManager.Instance.ShowPanel<InGamePanel>("InGamePanel");
         //InitializeCamera();

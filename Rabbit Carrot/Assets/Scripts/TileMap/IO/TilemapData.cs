@@ -70,5 +70,4 @@ public class TilemapData : IEnumerable<TilemapData.BlockData>
             Position = position; BlockId = blockId;
         }
     }
-
 }

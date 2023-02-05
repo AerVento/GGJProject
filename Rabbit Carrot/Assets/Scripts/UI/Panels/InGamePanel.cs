@@ -46,7 +46,7 @@ public class InGamePanel : BasePanel
     }
     private void SetScore(int score)
     {
-        GetControl<TextMeshProUGUI>("Score").text = "Score: " + score;
+        GetControl<TextMeshProUGUI>("ScoreText").text = score.ToString();
     }
     protected override void Awake()
     {

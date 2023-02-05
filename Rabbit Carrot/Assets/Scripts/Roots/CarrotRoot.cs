@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CarrotRoot : Root
 {
@@ -11,6 +12,8 @@ public class CarrotRoot : Root
     private float angle;
     private E_RootDirection direction;
     private BoxCollider2D boxCollider;
+
+    public event UnityAction OnRootDestroyed;
 
     /// <summary>
     /// The direction of root
@@ -82,8 +85,11 @@ public class CarrotRoot : Root
         {
             length = value;
 
+            Sprite sprite = GetComponent<SpriteRenderer>().sprite;
+            float pixelSize = sprite.pixelsPerUnit;
+            float spriteLength = sprite.texture.width / pixelSize;
             Vector3 scale = transform.localScale;
-            scale.x = value;
+            scale.x = value / spriteLength;
             transform.localScale = scale;
         }
     }
@@ -112,7 +118,6 @@ public class CarrotRoot : Root
 
     public override void DestroyRoot()
     {
-        GameController.Instance.FlyingObjectsController.AddFlying<Point>(transform.position);
-        GameController.Instance.CarrotsController.RemoveCarrot(carrot);
+        OnRootDestroyed?.Invoke();
     }
 }
